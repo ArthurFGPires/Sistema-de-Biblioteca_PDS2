@@ -1,5 +1,5 @@
 # Nome do projeto
-PROJ_NAME=Sistema de biblioteca
+PROJ_NAME=Main
 
 # Nome do arquivo executável
 EXEC=$(PROJ_NAME)
