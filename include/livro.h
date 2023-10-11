@@ -1,4 +1,5 @@
-#pragma
+#ifndef __LIVRO_H__
+#define __LIVRO_H__
 
 #include <iostream>
 
@@ -13,19 +14,19 @@ public:
     Livro(string titulo, string autor, string genero);
 
     // Retorna o título do livro
-    string get_Titulo();
+    string getTitulo();
     
     // Retorna o nome do Autor do livro
-    string get_Autor();
+    string getAutor();
 
     // Retorna o Genero do Livro
-    string get_Genero();
+    string getGenero();
 
     // Retorna o código ID do livro
-    int get_Id();
+    int getId();
 
     // Retorna o status de emprestimo do livro
-    bool get_emprestado();
+    bool getEmprestado();
 
 private:
     string titulo_;
@@ -36,3 +37,5 @@ private:
 
     static int proximo_ID;
 };
+
+#endif

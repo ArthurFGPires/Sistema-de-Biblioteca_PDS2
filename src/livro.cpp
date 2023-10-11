@@ -1,9 +1,8 @@
-#pragma
+#ifndef __LIVRO_CPP__
+#define __LIVRO_CPP__
 
-#include <iostream>
 #include "../include/livro.h"
 
-using std::string;
 
 int Livro::proximo_ID = 10001;
 
@@ -17,22 +16,24 @@ Livro::Livro(string titulo, string autor, string genero) {
 }
 
 
-string Livro::get_Titulo() {
+string Livro::getTitulo() {
     return this->titulo_;
 }
 
-string Livro::get_Autor() {
+string Livro::getAutor() {
     return this->autor_;
 }
 
-string Livro::get_Genero() {
+string Livro::getGenero() {
     return this->genero_;
 }
 
-int Livro::get_Id() {
+int Livro::getId() {
     return this->id_;
 }
 
-bool Livro::get_emprestado() {
+bool Livro::getEmprestado() {
     return this->emprestado_;
 }
+
+#endif
