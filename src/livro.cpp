@@ -1,39 +1,40 @@
-#ifndef __LIVRO_CPP__
-#define __LIVRO_CPP__
-
 #include "../include/livro.h"
-
 
 int Livro::proximo_ID = 10001;
 
 Livro::Livro(string titulo, string autor, string genero) {
-    this->titulo_ = titulo;
-    this->autor_ = autor;
-    this->genero_ = genero;
-    this->emprestado_ = false;
-    this->id_ = proximo_ID;
+    titulo_ = titulo;
+    autor_ = autor;
+    genero_ = genero;
+    emprestado_ = false;
+    id_ = proximo_ID;
     proximo_ID++;
 }
 
-
 string Livro::getTitulo() {
-    return this->titulo_;
+    return titulo_;
 }
 
 string Livro::getAutor() {
-    return this->autor_;
+    return autor_;
 }
 
 string Livro::getGenero() {
-    return this->genero_;
+    return genero_;
 }
 
 int Livro::getId() {
-    return this->id_;
+    return id_;
 }
 
 bool Livro::getEmprestado() {
-    return this->emprestado_;
+    return emprestado_;
 }
 
-#endif
+void Livro::emprestar() {
+    emprestado_ = true;
+}
+
+void Livro::devolucao() {
+    emprestado_ = false;
+}

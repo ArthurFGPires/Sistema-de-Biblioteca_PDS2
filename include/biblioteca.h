@@ -5,7 +5,8 @@
 #include <list>
 #include <vector>
 
-#include "../include/livro.h"
+#include "livro.h"
+#include "usuario.h"
 
 using std::string;
 using std::list;
@@ -18,26 +19,39 @@ public:
     Biblioteca::Biblioteca();
 
     // Adiciona um livro na lista de livros da biblioteca    
-    void adicionarLivro(Livro livro);
+    void adicionarLivro(const Livro& livro);
 
     // Adiciona todos os livros de um vector a lista de livros da biblioteca
-    void adicionarLivros(vector<Livro> lista_livros);
+    void adicionarLivros(const vector<Livro>& lista_livros);
 
-    // Lista todos os livros da biblioteca
-    vector<Livro> listarLivros();
+    // retorna um vector de ponteiros para todos os livros da biblioteca
+    list<Livro> listarLivros();
 
     // Lista todos os livros do genero presentes na biblioteca
     // IMPORTANTE: Se o gênero do livro foi inserido incorretamente no construtor o livro não será listado
-    vector<Livro> listarLivrosGenero(string genero);
+    list<Livro> listarLivrosGenero(string genero);
 
-    // Lista todos os livros do autor presentes na biblioteca
-    vector<Livro> listarLivrosAutor(string autor);
+    // retorna um vector com ponteiros para todos os livros do autor presentes na biblioteca
+    list<Livro> listarLivrosAutor(string titulo);
 
     // retorna um ponteiro para o Livro na biblioteca de acordo com o titulo
-    Livro* buscarLivroTitulo(string titulo);
+    // Caso o livro não esteja na biblioteca retorna um ponteiro nulo
+    Livro* buscarLivro(string titulo, string autor);
 
     // retorna um ponteiro para o Livro na biblioteca de acordo com o ID
-    Livro* buscarLivroID(int id);
+    // Caso o livro não esteja na biblioteca retorna um ponteiro nulo
+    Livro* buscarLivro(int id);
+
+    // Empresta um livro para o Usuario especificado
+    // Recebe o titulo e o autor para encontrar o livro
+    Livro* emprestarLivro(string titulo, string autor);
+
+    // Empresta um livro para o Usuario especificado
+    // Recebe o id para encontrar o livro
+    Livro* emprestarLivro(int id);
+
+    // Realiza a devolução de um livro para a biblioteca
+    void devolverLivro(Livro* livro);
 
 
 private:

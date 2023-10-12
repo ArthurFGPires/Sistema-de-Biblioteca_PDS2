@@ -46,6 +46,8 @@ $(EXEC): $(OBJ_FILES)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) -c $(CC_FLAGS) -o $@ $<
 
+run: $(EXEC)
+	./$(EXEC)
 # Remove os arquivos .o e o executável
 clean:
 	rm -f $(BUILD_DIR)/*.o $(EXEC)

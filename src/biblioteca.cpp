@@ -1,70 +1,83 @@
-#ifndef __BIBLIOTECA_CPP__
-#define __BIBLIOTECA_CPP__
-
 #include "../include/biblioteca.h"
 
-Biblioteca::Biblioteca () {}
+Biblioteca::Biblioteca() {}
 
-void Biblioteca::adicionarLivro(Livro adicionar) {
+void Biblioteca::adicionarLivro(const Livro& adicionar) {
     livros_.push_back(adicionar);
 }
 
-void Biblioteca::adicionarLivros(vector<Livro> lista_livros) {
-    for(Livro l : lista_livros) {
+void Biblioteca::adicionarLivros(const vector<Livro>& lista_livros) {
+    for (const Livro& l : lista_livros) {
         livros_.push_back(l);
     }
 }
 
-vector<Livro> Biblioteca::listarLivros() {
-    vector<Livro> lista_livros;
-
-    for(auto l : livros_) {
+list<Livro> Biblioteca::listarLivros() {
+    list<Livro> lista_livros;
+    for (const Livro& l : livros_) {
         lista_livros.push_back(l);
     }
-
     return lista_livros;
 }
 
-vector<Livro> Biblioteca::listarLivrosGenero(string genero) {
-    vector<Livro> lista_livros;
-
-    for(auto l : livros_) {
-        if(l.getGenero() == genero)
+list<Livro> Biblioteca::listarLivrosGenero(string genero) {
+    list<Livro> lista_livros;
+    for (auto& l : livros_) {
+        if (l.getGenero() == genero)
             lista_livros.push_back(l);
     }
-
     return lista_livros;
 }
 
-vector<Livro> Biblioteca::listarLivrosAutor(string autor) {
-    vector<Livro> lista_livros;
-
-    for(auto l : livros_) {
-        if(l.getAutor() == autor)
+list<Livro> Biblioteca::listarLivrosAutor(string autor) {
+    list<Livro> lista_livros;
+    for (auto& l : livros_) {
+        if (l.getAutor() == autor)
             lista_livros.push_back(l);
     }
-
     return lista_livros;
 }
 
-Livro* Biblioteca::buscarLivroTitulo(string titulo) {
-    vector<Livro> lista = listarLivros();
-
-    for(auto &l : lista) {
-        if(titulo == l.getTitulo())
+Livro* Biblioteca::buscarLivro(string titulo, string autor) {
+    for (auto& l : livros_) {
+        if (titulo == l.getTitulo() && autor == l.getAutor())
             return &l;
     }
     return nullptr;
 }
 
-Livro* Biblioteca::buscarLivroID(int id) {
-    vector<Livro> lista = listarLivros();
-
-    for(auto &l : lista) {
-        if(id == l.getId())
+Livro* Biblioteca::buscarLivro(int id) {
+    for (auto& l : livros_) {
+        if (id == l.getId())
             return &l;
     }
     return nullptr;
 }
 
-#endif
+Livro* Biblioteca::emprestarLivro(string titulo, string autor) {
+    Livro* livro = buscarLivro(titulo, autor);
+
+    if (livro && !livro->getEmprestado()) {
+        livro->emprestar();
+        return livro;
+    } else {
+        return nullptr;
+    }
+}
+
+Livro* Biblioteca::emprestarLivro(int id) {
+    Livro* livro = buscarLivro(id);
+
+    if (livro && !livro->getEmprestado()) {
+        livro->emprestar();
+        return livro;
+    } else {
+        return nullptr;
+    }
+}
+
+void Biblioteca::devolverLivro(Livro* livro) {
+    if (livro) {
+        livro->devolucao();
+    }
+}

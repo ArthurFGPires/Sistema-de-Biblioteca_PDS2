@@ -28,6 +28,12 @@ public:
     // Retorna o status de emprestimo do livro
     bool getEmprestado();
 
+    // Altera o status do livro emprestado para verdadeiro
+    void emprestar();
+
+    // Altera o status do Livro emprestado para falso
+    void devolucao();
+
 private:
     string titulo_;
     string autor_;
