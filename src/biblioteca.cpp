@@ -14,8 +14,10 @@ void Biblioteca::adicionarLivros(const vector<Livro>& lista_livros) {
 
 list<Livro> Biblioteca::listarLivros() {
     list<Livro> lista_livros;
-    for (const Livro& l : livros_) {
-        lista_livros.push_back(l);
+    for (auto& l : livros_) {
+        if(!l.getEmprestado()) {
+            lista_livros.push_back(l);
+        }
     }
     return lista_livros;
 }
@@ -23,7 +25,7 @@ list<Livro> Biblioteca::listarLivros() {
 list<Livro> Biblioteca::listarLivrosGenero(string genero) {
     list<Livro> lista_livros;
     for (auto& l : livros_) {
-        if (l.getGenero() == genero)
+        if (l.getGenero() == genero && !l.getEmprestado())
             lista_livros.push_back(l);
     }
     return lista_livros;
