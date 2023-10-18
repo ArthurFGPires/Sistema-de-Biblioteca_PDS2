@@ -13,10 +13,10 @@ public:
     // Por padrão da um prazo de 7 dias para devolução
     // Caso o necessite que o empréstimo seja proolongado, crie um novo emprestimo
     // PRÉ-CONDIÇÃO: dias deve ser maior que 0
-    Emprestimo(Livro* livro, int dias = 7);
+    Emprestimo(shared_ptr<Livro> livro, int dias = 7);
 
     // Retorna o livro referente ao emprestimo
-    Livro* getLivro();
+    shared_ptr<Livro> getLivro();
 
     // Retorna o prazo de entrega do livro
     const string getPrazo();
@@ -32,10 +32,10 @@ public:
     const bool getAtraso();
 
 private:
-    Livro* livro_;
+    shared_ptr<Livro> livro_;
     std::chrono::system_clock::time_point data_emprestimo_;
     std::chrono::system_clock::time_point prazo_;
-    string notificacao;
+    string notificacao_;
     bool atrasado_;
 };
 

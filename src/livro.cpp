@@ -2,7 +2,7 @@
 
 int Livro::proximo_ID = 10001;
 
-Livro::Livro(string titulo, string autor, string genero) {
+Livro::Livro(string titulo, string autor, Genero genero) {
     titulo_ = titulo;
     autor_ = autor;
     genero_ = genero;
@@ -19,7 +19,7 @@ string Livro::getAutor() {
     return autor_;
 }
 
-string Livro::getGenero() {
+Genero Livro::getGenero() {
     return genero_;
 }
 

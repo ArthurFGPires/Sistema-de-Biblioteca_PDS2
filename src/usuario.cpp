@@ -1,32 +1,33 @@
 #include "../include/usuario.h"
 
-vector<Livro*> Usuario::listarAlugados() {
-    std::vector<Livro*> livrosAlugados;
+Usuario::Usuario(const string& login, const string& senha) : User(login, senha, 0) {}
+
+vector<shared_ptr<Livro>> Usuario::listarAlugados() {
+    vector<std::shared_ptr<Livro>> livrosAlugados;
     
-    for (Emprestimo* emprestimo : alugados_) {
-        livrosAlugados.push_back(emprestimo->getLivro());
+    for (const auto& emprestimo : alugados_) {
+        std::shared_ptr<Livro> livro = emprestimo->getLivro();
+        livrosAlugados.push_back(livro);
     }
     
     return livrosAlugados;
 }
 
 void Usuario::alugarLivro(string titulo, string autor, Biblioteca& acervo) {
-    Livro* livro = acervo.emprestarLivro(titulo, autor);
+    shared_ptr<Livro> livro = acervo.emprestarLivro(titulo, autor);
 
     if (livro) {
-        Emprestimo* emprestimo = new Emprestimo(livro);
+        shared_ptr<Emprestimo> emprestimo = std::make_shared<Emprestimo>(livro);
         this->alugados_.push_back(emprestimo);
-        delete(emprestimo);
     }
 }
 
 void Usuario::alugarLivro(int id, Biblioteca& acervo) {
-    Livro* livro = acervo.emprestarLivro(id);
+    std::shared_ptr<Livro> livro = acervo.emprestarLivro(id);
 
     if (livro) {
-        Emprestimo* emprestimo = new Emprestimo(livro);
+        shared_ptr<Emprestimo> emprestimo = std::make_shared<Emprestimo>(livro);
         this->alugados_.push_back(emprestimo);
-        delete(emprestimo);
     }
 }
 
@@ -35,13 +36,15 @@ void Usuario::devolverLivro(int id, Biblioteca& acervo) {
 
     while (it != alugados_.end()) {
         if ((*it)->getLivro()->getId() == id) {
-            Emprestimo* emprestimo = *it;
             it = alugados_.erase(it);
-            delete emprestimo;
             break;
         } else {
             ++it;
         }
     }
-    acervo.devolverLivro(acervo.buscarLivro(id));
+
+    std::shared_ptr<Livro> livro = acervo.buscarLivro(id);
+    if (livro) {
+        acervo.devolverLivro(livro);
+    }
 }

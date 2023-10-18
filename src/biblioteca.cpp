@@ -2,13 +2,9 @@
 
 Biblioteca::Biblioteca() {}
 
-void Biblioteca::adicionarLivro(const Livro& adicionar) {
-    livros_.push_back(adicionar);
-}
-
-void Biblioteca::adicionarLivros(const vector<Livro>& lista_livros) {
-    for (const Livro& l : lista_livros) {
-        livros_.push_back(l);
+void Biblioteca::adicionarLivro(const Livro& adicionar, User& user) {
+    if(user.getPermissao() == 1) {
+        livros_.push_back(adicionar);
     }
 }
 
@@ -22,7 +18,7 @@ list<Livro> Biblioteca::listarLivros() {
     return lista_livros;
 }
 
-list<Livro> Biblioteca::listarLivrosGenero(string genero) {
+list<Livro> Biblioteca::listarLivrosGenero(Genero genero) {
     list<Livro> lista_livros;
     for (auto& l : livros_) {
         if (l.getGenero() == genero && !l.getEmprestado())
@@ -40,45 +36,53 @@ list<Livro> Biblioteca::listarLivrosAutor(string autor) {
     return lista_livros;
 }
 
-Livro* Biblioteca::buscarLivro(string titulo, string autor) {
-    for (auto& l : livros_) {
-        if (titulo == l.getTitulo() && autor == l.getAutor())
-            return &l;
+shared_ptr<Livro> Biblioteca::buscarLivro(string titulo, string autor) {
+    for (auto it = livros_.begin(); it != livros_.end(); ++it) {
+        if (titulo == it->getTitulo() && autor == it->getAutor()) {
+            if (!it->getEmprestado()) {
+                return std::make_shared<Livro>(*it); // Retorna um shared_ptr para uma cópia do livro
+            }
+        }
     }
     return nullptr;
 }
 
-Livro* Biblioteca::buscarLivro(int id) {
-    for (auto& l : livros_) {
-        if (id == l.getId())
-            return &l;
+shared_ptr<Livro> Biblioteca::buscarLivro(int id) {
+    for (auto it = livros_.begin(); it != livros_.end(); ++it) {
+        if (id == it->getId()) {
+            if (!it->getEmprestado()) {
+                return std::make_shared<Livro>(*it); // Retorna um shared_ptr para uma cópia do livro
+            }
+        }
     }
     return nullptr;
 }
 
-Livro* Biblioteca::emprestarLivro(string titulo, string autor) {
-    Livro* livro = buscarLivro(titulo, autor);
-
-    if (livro && !livro->getEmprestado()) {
-        livro->emprestar();
-        return livro;
-    } else {
-        return nullptr;
+shared_ptr<Livro> Biblioteca::emprestarLivro(string titulo, string autor) {
+    for (auto it = livros_.begin(); it != livros_.end(); ++it) {
+        if (titulo == it->getTitulo() && autor == it->getAutor()) {
+            if (!it->getEmprestado()) {
+                it->emprestar(); // Atualize o status de empréstimo
+                return std::make_shared<Livro>(*it); // Retorna um shared_ptr para uma cópia do livro
+            }
+        }
     }
+    return nullptr;
 }
 
-Livro* Biblioteca::emprestarLivro(int id) {
-    Livro* livro = buscarLivro(id);
-
-    if (livro && !livro->getEmprestado()) {
-        livro->emprestar();
-        return livro;
-    } else {
-        return nullptr;
+shared_ptr<Livro> Biblioteca::emprestarLivro(int id) {
+    for (auto it = livros_.begin(); it != livros_.end(); ++it) {
+        if (id == it->getId()) {
+            if (!it->getEmprestado()) {
+                it->emprestar(); // Atualize o status de empréstimo
+                return std::make_shared<Livro>(*it); // Retorna um shared_ptr para uma cópia do livro
+            }
+        }
     }
+    return nullptr;
 }
 
-void Biblioteca::devolverLivro(Livro* livro) {
+void Biblioteca::devolverLivro(shared_ptr<Livro> livro) {
     if (livro) {
         livro->devolucao();
     }

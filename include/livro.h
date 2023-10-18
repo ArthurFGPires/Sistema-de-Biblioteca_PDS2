@@ -5,13 +5,23 @@
 
 using std::string;
 
+enum class Genero {
+    FICCAO,
+    DRAMA,
+    SUSPENSE,
+    ROMANCE,
+    NOVELA,
+    CIENTIFICO,
+    FANTASIA
+};
+
 
 class Livro {
 public:
     // Cria um Livro com o Titulo, autor, genero,id aleatório e emprestado = false
     // IMPORTANTE: Gênero pode ser de um dos tipos (Ficcao, Drama, Suspense, Romance, Novela, Cientifico, Fantasia)
     // PRÉ-CONDIÇÃO: titulo e autor devem ser strings não nulas
-    Livro(string titulo, string autor, string genero);
+    Livro(string titulo, string autor, Genero genero);
 
     // Retorna o título do livro
     string getTitulo();
@@ -20,7 +30,7 @@ public:
     string getAutor();
 
     // Retorna o Genero do Livro
-    string getGenero();
+    Genero getGenero();
 
     // Retorna o código ID do livro
     int getId();
@@ -37,7 +47,7 @@ public:
 private:
     string titulo_;
     string autor_;
-    string genero_;
+    Genero genero_;
     int id_;
     bool emprestado_;
 

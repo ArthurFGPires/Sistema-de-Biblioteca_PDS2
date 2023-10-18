@@ -4,6 +4,7 @@
 #include "livro.h"
 #include "biblioteca.h"
 #include "emprestimo.h"
+#include "user.h"
 
 #include <iostream>
 #include <vector>
@@ -11,11 +12,13 @@
 using std::string;
 using std::vector;
 
-class Usuario {
+class Usuario : public User {
 public:
-    
+
+    Usuario(const string& login, const string& senha);
+
     // Retorna um vector com os livros alugados
-    vector<Livro*> listarAlugados();
+    vector<shared_ptr<Livro>> listarAlugados();
     
     // Adiciona um livro a lista de alugados do usuário
     // Procura o Livro por titulo e autor
@@ -28,9 +31,7 @@ public:
     void devolverLivro(int id, Biblioteca& acervo);
 
 private:
-    string login_;
-    string senha_;
-    vector<Emprestimo*> alugados_;
+    vector<shared_ptr<Emprestimo>> alugados_;
 };
 
 #endif

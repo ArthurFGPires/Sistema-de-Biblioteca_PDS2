@@ -3,14 +3,14 @@
 #include <string>
 #include <iomanip>
 
-Emprestimo::Emprestimo(Livro* livro, int dias = 7) {
+Emprestimo::Emprestimo(std::shared_ptr<Livro> livro, int dias) {
     this->livro_ = livro;
     this->data_emprestimo_ = std::chrono::system_clock::now();
     this->prazo_ = data_emprestimo_ + std::chrono::hours(24 * dias);
-    this->notificacao = "";
+    this->notificacao_ = "";
 }
 
-Livro* Emprestimo::getLivro() {
+std::shared_ptr<Livro> Emprestimo::getLivro() {
     return this->livro_;
 }
 
@@ -32,9 +32,9 @@ void Emprestimo::verificaAtraso() {
 
 const string Emprestimo::getNotificacao() {
     if(this->getAtraso()) {
-        return "Livro " + this->livro_->getTitulo() + " esta atrasado, data de devolucao foi " + this->getPrazo();
+        this->notificacao_ = "Livro " + this->livro_->getTitulo() + " esta atrasado, data de devolucao foi " + this->getPrazo();
     }
-    return "";
+    return this->notificacao_;
 }
 
 const bool Emprestimo::getAtraso() {
