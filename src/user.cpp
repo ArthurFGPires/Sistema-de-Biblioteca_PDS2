@@ -1,7 +1,7 @@
 #include "../include/user.h"
 
 User::User(string login, string senha, int permissao) {
-    if(checaSenha(senha)) {
+    if(validarSenha(senha)) {
         this->login_ = login;
         this->senha_ = senha;
         this->nivelPermissao_ = permissao;
@@ -22,7 +22,7 @@ bool User::checarUsuario(string login, string senha) {
 
 
 // Função Auxiliar: Checa se a senha é valida para criar usuario
-bool checaSenha(const string& senha) {
+bool User::validarSenha(const string& senha) {
     if(senha.size() > 50 || senha.size() < 6)
         return false;
   

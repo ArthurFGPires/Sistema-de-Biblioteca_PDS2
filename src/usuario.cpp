@@ -36,15 +36,36 @@ void Usuario::devolverLivro(int id, Biblioteca& acervo) {
 
     while (it != alugados_.end()) {
         if ((*it)->getLivro()->getId() == id) {
+            shared_ptr<Livro> livro = (*it)->getLivro();
+            acervo.devolverLivro(livro);
+            
             it = alugados_.erase(it);
             break;
-        } else {
+        } 
+        else {
             ++it;
         }
     }
+}
 
-    std::shared_ptr<Livro> livro = acervo.buscarLivro(id);
-    if (livro) {
-        acervo.devolverLivro(livro);
+vector<string> Usuario::getNotificacoes() {
+    vector<string> notificacoes;
+    for(auto e : alugados_) {
+        if(e->getNotificacao().size() > 0) {
+            notificacoes.push_back(e->getNotificacao());
+        }
     }
+
+    if(notificacoes.size() == 0) notificacoes.push_back("Nenhuma Notificação");
+
+    return notificacoes;
+}
+
+vector<string> Usuario::getPrazos() {
+    vector<string> prazos;
+    for(auto e : alugados_) {
+        prazos.push_back(e->getPrazo());
+    }
+
+    return prazos;
 }

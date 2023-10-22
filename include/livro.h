@@ -2,6 +2,7 @@
 #define __LIVRO_H__
 
 #include <iostream>
+#include <memory>
 
 using std::string;
 

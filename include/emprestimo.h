@@ -2,10 +2,12 @@
 #define __EMPRESTIMO_H__
 
 #include "biblioteca.h"
-#include "usuario.h"
 #include "livro.h"
 
 #include <chrono>
+#include <memory>
+
+using std::shared_ptr;
 
 class Emprestimo {
 public:

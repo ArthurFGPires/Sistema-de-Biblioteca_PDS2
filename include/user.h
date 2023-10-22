@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
 
 using std::string;
 
@@ -15,6 +16,8 @@ public:
     int getPermissao();
 
     bool checarUsuario(string login, string senha);
+
+    bool validarSenha(const string& senha);
 
 protected:
     

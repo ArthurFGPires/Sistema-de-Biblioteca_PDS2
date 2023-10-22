@@ -10,9 +10,10 @@
 using std::vector;
 
 class Funcionario : public User {
+public:
     Funcionario(const string& login, const string& senha);
 
-    void adicionarLivroAcervo(Livro& livro, Biblioteca& acervo);
+    void adicionarLivro(shared_ptr<Livro> livro, Biblioteca& acervo);
 };
 
 #endif

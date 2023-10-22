@@ -3,20 +3,18 @@
 #include <string>
 #include <iomanip>
 
-Emprestimo::Emprestimo(std::shared_ptr<Livro> livro, int dias) {
+Emprestimo::Emprestimo(shared_ptr<Livro> livro, int dias) {
     this->livro_ = livro;
     this->data_emprestimo_ = std::chrono::system_clock::now();
     this->prazo_ = data_emprestimo_ + std::chrono::hours(24 * dias);
     this->notificacao_ = "";
 }
 
-std::shared_ptr<Livro> Emprestimo::getLivro() {
+shared_ptr<Livro> Emprestimo::getLivro() {
     return this->livro_;
 }
 
 const string Emprestimo::getPrazo() {
-    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-    
     std::time_t prazo_time = std::chrono::system_clock::to_time_t(prazo_);
     std::tm prazo_tm = *std::localtime(&prazo_time);
     
@@ -38,5 +36,6 @@ const string Emprestimo::getNotificacao() {
 }
 
 const bool Emprestimo::getAtraso() {
+    this->verificaAtraso();
     return this->atrasado_;
 }

@@ -1,5 +1,5 @@
 # Nome do projeto
-PROJ_NAME=Main
+PROJ_NAME=Sistema_Biblioteca
 
 # Nome do arquivo executável
 EXEC=$(PROJ_NAME)
@@ -17,7 +17,7 @@ BUILD_DIR=build
 CC=g++
 
 # Flags do compilador
-CC_FLAGS=-Wall -std=c++11 -I $(INCLUDE_DIR)
+CC_FLAGS=-Wall -std=c++20 -I $(INCLUDE_DIR)
 
 # Bibliotecas
 LIBS=-lm
@@ -38,16 +38,21 @@ all: $(BUILD_DIR) $(EXEC)
 $(BUILD_DIR):
 	$(MKDIR_P) $(BUILD_DIR)
 
+# Compila todos os arquivos .o
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CC) -c $(CC_FLAGS) -o $@ $<
+
 # Cria o executável
 $(EXEC): $(OBJ_FILES)
 	$(CC) -o $@ $^ $(LIBS)
 
-# Cria os arquivos .o a partir dos arquivos .cpp
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) -c $(CC_FLAGS) -o $@ $<
+# Regra para compilar um arquivo .o específico
+%.o: $(SRC_DIR)/%.cpp
+	$(CC) -c $(CC_FLAGS) -o $(BUILD_DIR)/$@ $<
 
 run: $(EXEC)
 	./$(EXEC)
+
 # Remove os arquivos .o e o executável
 clean:
 	rm -f $(BUILD_DIR)/*.o $(EXEC)

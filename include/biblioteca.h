@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "livro.h"
-#include "usuario.h"
+#include "user.h"
 
 using std::string;
 using std::list;
@@ -18,20 +18,20 @@ class Biblioteca {
 public:
     
     // Cria uma biblioteca vazia
-    Biblioteca::Biblioteca();
+    Biblioteca();
 
     // Adiciona um livro na lista de livros da biblioteca    
-    void adicionarLivro(const Livro& livro, User& user);
+    void adicionarLivro(shared_ptr<Livro> livro, User& user);
 
     // retorna um vector de ponteiros para todos os livros da biblioteca
-    list<Livro> listarLivros();
+    list<shared_ptr<Livro>> listarLivros();
 
     // Lista todos os livros do genero presentes na biblioteca
     // IMPORTANTE: Se o gênero do livro foi inserido incorretamente no construtor o livro não será listado
-    list<Livro> listarLivrosGenero(Genero genero);
+    list<shared_ptr<Livro>> listarLivrosGenero(Genero genero);
 
     // retorna um vector com ponteiros para todos os livros do autor presentes na biblioteca
-    list<Livro> listarLivrosAutor(string titulo);
+    list<shared_ptr<Livro>> listarLivrosAutor(string titulo);
 
     // retorna um ponteiro para o Livro na biblioteca de acordo com o titulo
     // Caso o livro não esteja na biblioteca retorna um ponteiro nulo
@@ -54,7 +54,7 @@ public:
 
 
 private:
-    list<Livro> livros_;
+    list<shared_ptr<Livro>> livros_;
 };
 
 #endif
