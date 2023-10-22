@@ -23,15 +23,21 @@ public:
     // Adiciona um livro na lista de livros da biblioteca    
     void adicionarLivro(shared_ptr<Livro> livro, User& user);
 
-    // retorna um vector de ponteiros para todos os livros da biblioteca
+    // Remove um livro da biblioteca
+    void removerLivro(int id, User& user);
+
+    // retorna um list de ponteiros para todos os livros disponiveis da biblioteca
     list<shared_ptr<Livro>> listarLivros();
+
+    // Retorna um list de ponteiros para livros com o titulo passado como parametro
+    list<shared_ptr<Livro>> listarLivrosTitulo(const string& titulo);
 
     // Lista todos os livros do genero presentes na biblioteca
     // IMPORTANTE: Se o gênero do livro foi inserido incorretamente no construtor o livro não será listado
     list<shared_ptr<Livro>> listarLivrosGenero(Genero genero);
 
-    // retorna um vector com ponteiros para todos os livros do autor presentes na biblioteca
-    list<shared_ptr<Livro>> listarLivrosAutor(string titulo);
+    // retorna um list com ponteiros para todos os livros do autor presentes na biblioteca
+    list<shared_ptr<Livro>> listarLivrosAutor(const string& autor);
 
     // retorna um ponteiro para o Livro na biblioteca de acordo com o titulo
     // Caso o livro não esteja na biblioteca retorna um ponteiro nulo

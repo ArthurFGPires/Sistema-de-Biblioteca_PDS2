@@ -8,12 +8,34 @@ void Biblioteca::adicionarLivro(shared_ptr<Livro> adicionar, User& user) {
     }
 }
 
+void Biblioteca::removerLivro(int id, User& user) {
+    if(user.getPermissao()){
+        list<shared_ptr<Livro>>::iterator it;
+
+        for(it = livros_.begin(); it != livros_.end(); ++it) {
+            if((*it)->getId() == id) {
+                livros_.erase(it);
+                break;
+            }
+        }
+    }
+}
+
 list<shared_ptr<Livro>> Biblioteca::listarLivros() {
     list<shared_ptr<Livro>> lista_livros;
     for (auto& l : livros_) {
         if(!l->getEmprestado()) {
             lista_livros.push_back(l);
         }
+    }
+    return lista_livros;
+}
+
+list<shared_ptr<Livro>> Biblioteca::listarLivrosTitulo(const string& titulo) {
+    list<shared_ptr<Livro>> lista_livros;
+    for (auto& l : livros_) {
+        if (l->getTitulo() == titulo && !l->getEmprestado())
+            lista_livros.push_back(l);
     }
     return lista_livros;
 }
@@ -27,7 +49,7 @@ list<shared_ptr<Livro>> Biblioteca::listarLivrosGenero(Genero genero) {
     return lista_livros;
 }
 
-list<shared_ptr<Livro>> Biblioteca::listarLivrosAutor(string autor) {
+list<shared_ptr<Livro>> Biblioteca::listarLivrosAutor(const string& autor) {
     list<shared_ptr<Livro>> lista_livros;
     for (auto& l : livros_) {
         if (l->getAutor() == autor)
