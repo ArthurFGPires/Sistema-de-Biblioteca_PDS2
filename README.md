@@ -27,7 +27,7 @@ Para a modelagem das classes do projeto, fizemos o uso de User Stories e cartõe
   - Permitir empréstimo e devolução do livro.
 
 - **Colaborações:**
-  - Nenhum relacionamento de colaboração explícito com outras classes é mencionado no código fornecido, mas a classe pode ser usada em um contexto mais amplo de uma biblioteca ou sistema de gerenciamento de livros.
+  - Nenhuma relação de colaboração
 
 A classe `Livro` é projetada para representar informações sobre livros, incluindo seus detalhes, ID e status de empréstimo. Ela fornece métodos para interagir com essas informações, permitindo o empréstimo e a devolução de livros, além de gerar IDs exclusivos para cada instância da classe.
 
@@ -46,7 +46,7 @@ A classe `Livro` é projetada para representar informações sobre livros, inclu
 
 - **Colaborações:**
   - Colabora com a classe `Livro` para armazenar informações sobre os livros.
-  - Colabora com a classe `User` para emprestar livros para usuários.
+  - Colabora com a classe `User` para emprestar livros para usuários e permitir manipulações de funcionários.
 
 A classe `Biblioteca` é responsável por gerenciar os livros disponíveis na biblioteca, permitindo adicionar, remover, listar, emprestar e devolver livros. Ela mantém uma lista de ponteiros para os livros disponíveis e colabora com as classes `Livro` e `User` para realizar operações de empréstimo e devolução.
 
@@ -123,7 +123,6 @@ A classe `Funcionario` representa um funcionário do sistema que possui permiss�
 
 - **Colaborações:**
   - Colabora com outras classes, como `Usuario`, `Funcionario`, `Biblioteca`, etc., para executar as operações e interações do usuário.
-  - Pode ser utilizada em conjunto com uma futura implementação gráfica ou interativa do sistema.
 
 A classe `Interface` é projetada para fornecer uma interface de usuário para interagir com o sistema, permitindo que usuários façam login, naveguem pelos menus, realizem operações específicas para cada tipo de usuário (como usuário ou funcionário) e efetuem cadastros. Ela colabora com outras classes do sistema para realizar as operações e interações necessárias.
 
