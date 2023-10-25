@@ -1,5 +1,5 @@
 class Interface {
-    
+
 public:
     // Método para inicializar o menu, pode ser utilizado na implementação de uma interface gráfica depois
     void inicializar();
@@ -18,4 +18,4 @@ public:
 
     // Menu de cadastro de um funcionário 
     shared_ptr<Funcionario> cadastroFuncionario();
-}
+};
