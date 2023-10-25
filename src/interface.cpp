@@ -1,32 +1,31 @@
 #include <iostream>
 #include <string>
-#include "../include/user.h"
-#include "../include/usuario.h"
-#include "../include/funcionario.h"
+#include "user.h" 
+#include "usuario.h" 
+#include "funcionario.h" 
 
 using namespace std;
 
-void tela_inicial(){
-    cout << "1 para logar 2 para criar conta";
+void tela_inicial() {
+    cout << "1 para logar, 2 para criar conta";
     int s;
     cin >> s;
-    if(s == 1 ){
-        string usuario = User::getLogin;
-        string senha = User::getSenha;
-
-        if(User::checarUsuario(usuario, senha)){
-
-            if(User::getPermissao()){
-                User::login_usuario();
-            }
-            else User::login_funcionario();
+    if (s == 1) {
+        string login, senha;
+        cin >> login >> senha;
+        User* user = new User(login, senha, 1);
+        if(user->getPermissao()){
+            login_funcionario();
         }
-    }
-    else if (s == 2){
+        else if(!user->getPermissao()){
+            login_usuario();
+        }
+    } else if (s == 2) {
         // criarUsuario
     }
-    
+
 }
+
 void login_usuario(){
     
 }
@@ -35,7 +34,10 @@ void login_funcionario(){
     int s;
     cin >> s;
     if (s == 1){
-        Funcionario::adicionarLivro(livro, acervo);
+        string livro, acervo;
+        cin >> livro >> acervo ;
+       // Funcionario Funcionario;
+        //Funcionario.adicionarLivro( livro,  acervo);    //passagem de parametro shared_ptr?
     }
     else if(s == 2){
         // removerLivro
