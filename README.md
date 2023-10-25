@@ -126,3 +126,23 @@ A classe `Funcionario` representa um funcionário do sistema que possui permiss�
 
 A classe `Interface` é projetada para fornecer uma interface de usuário para interagir com o sistema, permitindo que usuários façam login, naveguem pelos menus, realizem operações específicas para cada tipo de usuário (como usuário ou funcionário) e efetuem cadastros. Ela colabora com outras classes do sistema para realizar as operações e interações necessárias.
 
+# Funcionamento do Código
+
+Para executar este código, siga os passos a seguir:
+
+1. Abra o terminal.
+2. Digite o comando `make run` e pressione Enter.
+3. Isso criará uma pasta chamada "build" onde os arquivos compilados serão armazenados.
+4. Na pasta raiz, um arquivo executável será gerado e automaticamente executado.
+
+O arquivo "main" contém uma implementação simples que demonstra o funcionamento das classes. As funcionalidades apresentadas servem como um exemplo e serão posteriormente integradas à classe de interface, que ainda está em desenvolvimento. A interface permitirá ao usuário realizar as operações desejadas.
+
+Atualmente, no arquivo "main", você encontrará implementações que incluem:
+
+- Criação de funcionários e usuários.
+- Inserção de livros na biblioteca por parte do usuário.
+- Visualização dos livros disponíveis.
+- Simulação de empréstimo e devolução.
+- Utilização das notificações do usuário.
+
+Essas funcionalidades demonstram o funcionamento básico do código e servem como ponto de partida para o desenvolvimento futuro.
