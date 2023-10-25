@@ -1,9 +1,9 @@
 class Interface {
 
 public:
-    // Método para inicializar o menu, pode ser utilizado na implementação de uma interface gráfica depois
-    void inicializar();
-
+    // Construtor da interface gráfica
+    Interface();
+    
     // Área q permite o usuário logar ou abrir seção de cadastro de usuário 
      void areaLogin();
 
