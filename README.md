@@ -140,7 +140,7 @@ O arquivo "main" contém uma implementação simples que demonstra o funcionamen
 Atualmente, no arquivo "main", você encontrará implementações que incluem:
 
 - Criação de funcionários e usuários.
-- Inserção de livros na biblioteca por parte do usuário.
+- Inserção e Remoção de livros na biblioteca por parte do funcinário.
 - Visualização dos livros disponíveis.
 - Simulação de empréstimo e devolução.
 - Utilização das notificações do usuário.
