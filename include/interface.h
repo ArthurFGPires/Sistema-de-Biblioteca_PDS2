@@ -1,3 +1,20 @@
+#ifndef __INTERFACE_H__
+#define __INTERFACE_H__
+
+#include "user.h"
+#include "usuario.h"
+#include "funcionario.h"
+#include "biblioteca.h"
+#include "emprestimo.h"
+#include "livro.h"
+
+#include <iostream>
+#include <string>
+#include <memory>
+
+using namespace std;
+
+
 class Interface {
 
 public:
@@ -19,3 +36,5 @@ public:
     // Menu de cadastro de um funcionário 
     shared_ptr<Funcionario> cadastroFuncionario();
 };
+
+#endif
