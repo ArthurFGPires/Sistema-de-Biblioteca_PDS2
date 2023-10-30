@@ -23,7 +23,7 @@ public:
     // Adiciona um livro na lista de livros da biblioteca    
     void adicionarLivro(shared_ptr<Livro> livro, User& user);
 
-    // Remove um livro da biblioteca
+    // Remove um livro da biblioteca, só pode ser utilizada por um funcionário
     void removerLivro(int id, User& user);
 
     // retorna um list de ponteiros para todos os livros disponiveis da biblioteca
