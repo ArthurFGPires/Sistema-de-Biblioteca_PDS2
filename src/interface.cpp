@@ -1,7 +1,7 @@
 #include "../include/interface.h"
 #include <iostream>
 #include <string>
-
+#include <vector>
 
 using namespace std;
 
@@ -20,7 +20,15 @@ void areaLogin() {
             menuUsuario();
         }
     } else if (s == 2) {
-        // criarUsuario
+        string login1 , senha1;
+        cout<<"Digite seu usuario e sua senha"<<endl;
+        cout<<"Usuario:";
+        cin>>login1;
+        cout<<"Senha:";
+        cin>>senha1;
+        User* aux=new User(login1 , senha1 , 1);
+        usuarios_.push_back(aux);
+      
     }
 
 }
