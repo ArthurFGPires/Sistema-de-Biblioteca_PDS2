@@ -5,6 +5,8 @@ Grupo:
   * Lúcia Helena Ribeiro da Silva Capanema
   * João Vitor Batista Camargos
 
+Nota: O grupo não havia percebido que os commits seriam usados como parte da avaliação. A criação dos TADs e a maior parte das implementações nas classes Livro e Biblioteca foram realizadas em colaboração, seja por meio de chamadas online ou reuniões presenciais na universidade. Essa abordagem foi adotada para facilitar o entendimento e a adaptação da estrutura do código. Portanto, embora os commits para essas classes tenham sido feitos por apenas um aluno, elas foram desenvolvidas em grupo. Para a entrega final, garantiremos que os commits estejam distribuídos de acordo com a contribuição de cada membro individualmente por meio de branches.
+
 # Objetivo do Trabalho
 O propósito do nosso trabalho é criar um sistema que se assemelhe a uma biblioteca virtual, empregando os princípios da Programação Orientada a Objetos (POO) e outros conceitos aprendidos na disciplina de Programação e Desenvolvimento de Software 2 (PDS 2).
 Para a modelagem das classes do projeto, fizemos o uso de User Stories e cartões CRC.
