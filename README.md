@@ -33,6 +33,22 @@ Para a modelagem das classes do projeto, fizemos o uso de User Stories e cartõe
 
 A classe `Livro` é projetada para representar informações sobre livros, incluindo seus detalhes, ID e status de empréstimo. Ela fornece métodos para interagir com essas informações, permitindo o empréstimo e a devolução de livros, além de gerar IDs exclusivos para cada instância da classe.
 
+Descrição dos métodos:
+
+*Livro*
+--------------------------------------------------------------
+- titulo : string
+- autor : string
+- genero : Genero
+- id : int
+- emprestado : bool
++ getTitulo() : string     // Retorna o título
++ getAutor() : string      // Retorna o nome do Autor
++ getGenero() : Genero     // Retorna o genero do Livro
++ getId() : int            // Retorna o Id do livro
++ getEmprestado() : bool   // Retorna se o livro está disponível para empréstimo
++ emprestar() : void       // Altera o status de empréstimo do livro para verdadeiro
++ devolucao() : void       // Altera o status de empréstimo do livro para falso
 
 
 ## Classe: Biblioteca
@@ -52,6 +68,21 @@ A classe `Livro` é projetada para representar informações sobre livros, inclu
 
 A classe `Biblioteca` é responsável por gerenciar os livros disponíveis na biblioteca, permitindo adicionar, remover, listar, emprestar e devolver livros. Ela mantém uma lista de ponteiros para os livros disponíveis e colabora com as classes `Livro` e `User` para realizar operações de empréstimo e devolução.
 
+Descrição dos métodos:
+
+*Biblioteca*
+--------------------------------------------------------------
+- livros : list<shared_ptr<Livro>>
++ adicionarLivro(shared_ptr<Livro> livro, User& user) : void           // Adiciona um livro a biblioteca se o usuário for credenciado
++ removerLivro(int id, User& user) : void                              // Remove um livro da biblioteca se o usuário for credenciado
++ listarLivros() : list<shared_ptr<Livro>>                             // Retorna uma lista de livros disponíveis na biblioteca
++ listarLivrosGenero(Genero genero) : list<shared_ptr<Livro>>          // Retorna uma lista de livros disponíveis na biblioteca com o Genero específicado
++ listarLivrosAutor(const string& autor) : list<shared_ptr<Livro>>     // Retorna uma lista de livros disponíveis na biblioteca com o Autor específicado
++ buscarLivro(string titulo, string autor) : shared_ptr<Livro>         // Busca livro com titulo e autor especificados
++ buscarLivro(int id) : shared_ptr<Livro>                              // Busca livro com o Id especificado
++ emprestarLivro(string titulo, string autor) : shared_ptr<Livro>      // Empresta o livro com titulo e autor especificados, se possuir mais de um livro na biblioteca um deles será emprestado
++ emprestarLivro(int id) : shared_ptr<Livro>                           // Empresta o livro com o id indicado
++ devolverLivro(shared_ptr<Livro> livro) : void                        // Altera o status de emprestimo do livro especificado
 
 ## Classe: Emprestimo
 
@@ -67,6 +98,20 @@ A classe `Biblioteca` é responsável por gerenciar os livros disponíveis na bi
 
 A classe `Emprestimo` representa um empréstimo de um livro da biblioteca, permitindo que os usuários definam um prazo de devolução. Ela calcula o prazo de entrega e verifica se o livro está atrasado, fornecendo notificações apropriadas. A classe colabora com `Livro` para manter informações sobre o livro emprestado e pode ser gerenciada pela classe `Biblioteca` ou outra classe relacionada ao sistema de empréstimo de livros.
 
+Descrição dos metodos:
+
+*Empréstimo*
+--------------------------------------------------------------
+- livro : shared_ptr<Livro>
+- data_emprestimo : time_point
+- prazo : time_point
+- notificacao : string
+- atrasado : bool
++ getLivro() : shared_ptr<Livro>    // Retorna o livro referente ao empréstimo
++ getPrazo() : string               // Retorna o prazo para devolução em formato "DD/MM/AAAA"
++ getNotificacao() : string         // Retorna uma notificação em caso de atraso
++ verificaAtraso() : void           // Atualiza o status de atraso do emprestimo
++ getAtraso() : bool                // Retorna o valor do atributo atrasado
 
 ## Classe: User (Classe Mãe para Funcionario e Usuario)
 
@@ -82,6 +127,18 @@ A classe `Emprestimo` representa um empréstimo de um livro da biblioteca, permi
 
 A classe `User` é uma classe mãe que encapsula informações genéricas de usuário, como login, senha e permissão. Ela fornece métodos para verificar a validade do login e senha e colabora com subclasses, como `Funcionario` e `Usuario`, para estender seu comportamento de acordo com as necessidades específicas de diferentes tipos de usuários no sistema.
 
+Descrição dos metodos:
+
+*User*
+--------------------------------------------------------------
+- login : string
+- senha : string
+- nivelPermissao : int
++ getSenha() : string                                   // Retorna a senha do user (protegido)
++ getLogin() : string                                   // Retorna o login
++ getPermissao () : int                                 // Retorna o nível de permissão do user
++ checarUsuario(string login, string senha) : bool      // Retorna se os parametros passados correspondem ao user
++ validarSenha(const string& senha) : bool              // Retorna se a senha inserida é valida para cadastro
 
 ## Classe: Usuario
 
@@ -98,6 +155,18 @@ A classe `User` é uma classe mãe que encapsula informações genéricas de usu
 
 A classe `Usuario` representa um usuário do sistema que pode alugar e devolver livros da biblioteca. Ela herda as informações de login e permissão da classe `User` e adiciona funcionalidades específicas do usuário, como o rastreamento de livros alugados, notificações e prazos de devolução.
 
+Descrição dos métodos:
+
+*Usuario*
+--------------------------------------------------------------
+- alugados : vector<shared_ptr<Emprestimo>>
++ listarAlugados() : vector<shared_ptr<Livro>>                           // Lista os livros alugados pelo usuario
++ alugarLivro(string titulo, string autor, Biblioteca& acervo) : void    // Aluga o livro especificado(Autor, titulo) na biblioteca especificada
++ alugarLivro(int id, Biblioteca& acervo) : void                         // Aluga o livro especificado(Id) na biblioteca especificada
++ devolverLivro(int id, Biblioteca& acervo) : void                       // Devolve livro da lista de alugados para sua biblioteca
++ getNotificacoes() : vector<string>                                     // Retorna as notificações referentes aos emprestimos
++ getPrazos() : vector<string>                                           // Retorna o prazo de devolução para cada livro alugado
+
 
 ## Classe: Funcionario
 
@@ -111,6 +180,12 @@ A classe `Usuario` representa um usuário do sistema que pode alugar e devolver 
 
 A classe `Funcionario` representa um funcionário do sistema que possui permissões especiais para adicionar livros ao acervo da biblioteca. Ela herda as informações de login e permissão da classe `User` e adiciona funcionalidades específicas para funcionários, como a capacidade de adicionar livros ao acervo da biblioteca.
 
+Descrição dos métodos:
+
+*Funcionário*
+--------------------------------------------------------------
++ adicionarLivro(shared_ptr<Livro> livro, Biblioteca& acervo) : void    // Adiciona livro na biblioteca
++ removerLivro(int id, Biblioteca& acervo) : void                       // Remove livro da biblioteca
 
 ## Classe: Interface
 
