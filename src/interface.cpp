@@ -1,4 +1,7 @@
 #include "../include/interface.h"
+#include "user.h" 
+#include "usuario.h" 
+#include "funcionario.h" 
 #include <iostream>
 #include <string>
 #include <vector>
@@ -28,7 +31,6 @@ void areaLogin() {
         cin>>senha1;
         User* aux=new User(login1 , senha1 , 1);
         usuarios_.push_back(aux);
-      
     }
 
 }
