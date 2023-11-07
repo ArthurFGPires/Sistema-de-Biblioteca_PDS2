@@ -14,6 +14,8 @@ public:
     Funcionario(const string& login, const string& senha);
 
     void adicionarLivro(shared_ptr<Livro> livro, Biblioteca& acervo);
+
+    void removerLivro(int id, Biblioteca& acervo);
 };
 
 #endif
