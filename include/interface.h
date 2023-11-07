@@ -8,7 +8,6 @@
 #include "funcionario.h"
 #include <vector>
 
-
 class Interface {
 
 public:
