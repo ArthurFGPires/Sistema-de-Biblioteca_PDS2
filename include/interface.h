@@ -32,9 +32,6 @@ public:
     // Método para liberar a memória alocada
     ~Interface();
 
-    // Método para inicializar a interface gráfica
-    void inicializar();
-
     // Método para atualizar a interface gráfica com as informações mais recentes
     void atualizar();
 
