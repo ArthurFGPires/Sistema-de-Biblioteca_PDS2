@@ -1,11 +1,22 @@
 #include <string>
 
+// Arquivo Interface.h
+
+#ifndef __INTERFACE_H__
+#define __INTERFACE_H__
+
+#include "biblioteca.h"
+#include "usuario.h"
+#include "funcionario.h"
+#include <vector>
+
+
 class Interface {
 
 public:
     // Construtor da interface gráfica
     Interface();
-    
+
     // Área q permite o usuário logar ou abrir seção de cadastro de usuário 
      shared_ptr<User> areaLogin();
 
@@ -20,7 +31,4 @@ public:
 
     // Menu de cadastro de um funcionário 
     shared_ptr<Funcionario> cadastroFuncionario();
-
-    private:
-    string users_;
 };
