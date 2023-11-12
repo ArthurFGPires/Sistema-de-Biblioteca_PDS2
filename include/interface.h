@@ -1,3 +1,5 @@
+#include <string>
+
 class Interface {
 
 public:
@@ -5,7 +7,7 @@ public:
     Interface();
     
     // Área q permite o usuário logar ou abrir seção de cadastro de usuário 
-     void areaLogin();
+     shared_ptr<User> areaLogin();
 
     // Menu onde o usuário pode ver os livros que estão emprestados a ele, pedir para listar livros disponíveis na biblioteca, pedir empréstimo de livro, devolver livro e verificar suas notificações 
     void menuUsuario();
@@ -18,4 +20,7 @@ public:
 
     // Menu de cadastro de um funcionário 
     shared_ptr<Funcionario> cadastroFuncionario();
+
+    private:
+    string users_;
 };
