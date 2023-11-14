@@ -26,6 +26,7 @@ Interface::Interface(Biblioteca& biblioteca) : biblioteca_(biblioteca) {
     funcionario->adicionarLivro(livro3);
     funcionario->adicionarLivro(livro4);
     funcionario->adicionarLivro(livro5);
+
 }
 
 shared_ptr<User> Interface::areaLogin() {
@@ -238,6 +239,7 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             funcionario->removerLivro(id);
+          
         } else if(sel == 3) {
             cadastroFuncionario();
         } else if(sel == 4) {
