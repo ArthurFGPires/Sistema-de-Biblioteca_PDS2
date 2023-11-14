@@ -1,5 +1,19 @@
 #include "../include/livro.h"
 
+std::string generoParaString(Genero genero) {
+    switch (genero) {
+        case Genero::FICCAO: return "Ficção";
+        case Genero::DRAMA: return "Drama";
+        case Genero::SUSPENSE: return "Suspense";
+        case Genero::ROMANCE: return "Romance";
+        case Genero::NOVELA: return "Novela";
+        case Genero::CIENTIFICO: return "Científico";
+        case Genero::FANTASIA: return "Fantasia";
+        default: return "Desconhecido";
+    }
+}
+
+
 int Livro::proximo_ID = 10001;
 
 Livro::Livro(string titulo, string autor, Genero genero) {
@@ -37,4 +51,10 @@ void Livro::emprestar() {
 
 void Livro::devolucao() {
     emprestado_ = false;
+}
+
+std::ostream& operator<<(std::ostream& out, Livro& livro) {
+    out << "Titulo: " << livro.getTitulo() << "\tAutor:" << livro.getAutor() << "\tGenêro: " 
+    << generoParaString(livro.getGenero()) << "\tID: " << livro.getId() << std::endl;
+    return out;
 }

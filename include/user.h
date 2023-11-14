@@ -19,6 +19,7 @@ public:
 
     bool validarSenha(const string& senha);
 
+    virtual ~User();
 protected:
     
     string getSenha() {

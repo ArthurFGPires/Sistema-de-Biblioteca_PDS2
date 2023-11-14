@@ -17,21 +17,21 @@ using std::shared_ptr;
 class Usuario : public User {
 public:
 
-    Usuario(const string& login, const string& senha);
+    Usuario(const string& login, const string& senha, Biblioteca& biblioteca);
 
     // Retorna um vector com os livros alugados
     vector<shared_ptr<Livro>> listarAlugados();
     
     // Adiciona um livro à lista de alugados do usuário
     // Procura o Livro por título e autor
-    void alugarLivro(string titulo, string autor, Biblioteca& acervo);
+    void alugarLivro(string titulo, string autor);
 
     // Adiciona um livro à lista de alugados do usuário
     // Procura o Livro por ID
-    void alugarLivro(int id, Biblioteca& acervo);
+    void alugarLivro(int id);
 
     // Devolve um livro da lista de alugados
-    void devolverLivro(int id, Biblioteca& acervo);
+    void devolverLivro(int id);
 
     // Retorna um vector com todas as notificações para o usuario
     vector<string> getNotificacoes();
@@ -40,6 +40,7 @@ public:
 
 private:
     vector<shared_ptr<Emprestimo>> alugados_;
+    Biblioteca& biblioteca_;
 };
 
 #endif

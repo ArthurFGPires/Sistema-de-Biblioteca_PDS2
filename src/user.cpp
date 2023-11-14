@@ -2,22 +2,22 @@
 
 User::User(string login, string senha, int permissao) {
     if(validarSenha(senha)) {
-        this->login_ = login;
-        this->senha_ = senha;
-        this->nivelPermissao_ = permissao;
+        login_ = login;
+        senha_ = senha;
+        nivelPermissao_ = permissao;
     }
 }
 
 string User::getLogin() {
-    return this->login_;
+    return login_;
 }
 
 int User::getPermissao() {
-    return this->nivelPermissao_;
+    return nivelPermissao_;
 }
 
 bool User::checarUsuario(string login, string senha) {
-    return (login == this->getLogin()) && (senha == this->getSenha());
+    return (login == getLogin()) && (senha == getSenha());
 }
 
 
@@ -37,3 +37,5 @@ bool User::validarSenha(const string& senha) {
   return true;
     
 }
+
+User::~User() {}
