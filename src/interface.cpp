@@ -33,11 +33,188 @@ Interface::Interface(Biblioteca& biblioteca) {
 shared_ptr<User> Interface::areaLogin() {
 }
 
+
 void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
+    int sel;
+    
+    do {
+        system("clear");
+        cout << "Menu Usuário" << endl;
+        cout << "-------------------------------" << endl;
+        cout << "1) Listar livros da Biblioteca" << endl;
+        cout << "2) Alugar Livro" << endl;
+        cout << "3) Devolver Livro" << endl;
+        cout << "4) Sair" << endl;
+
+        cin >> sel;
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+        if(sel == 1) {
+            cout << "\n\n";
+            int op_listar;
+            cout << "1) Listar todos os livros disponíveis" << endl;
+            cout << "2) Listar livros com um título específico" << endl;
+            cout << "3) Listar livros de um autor específico" << endl;
+            cout << "4) Listar livros de um gênero específico" << endl;
+            
+            cin >> op_listar;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            list<shared_ptr<Livro>> lista;
+            string pesquisa;
+
+            switch (op_listar)
+            {
+            case 1:
+                lista = biblioteca_.listarLivros();
+                break;
+            
+            case 2:
+                cout << "Insira o título: ";
+                getline(cin, pesquisa);
+                lista = biblioteca_.listarLivrosTitulo(pesquisa);
+                break; 
+
+            case 3:
+                cout << "Insira o Autor: ";
+                getline(cin, pesquisa);
+                lista = biblioteca_.listarLivrosAutor(pesquisa);
+                break;
+            
+            case 4:
+                cout << "Insira o Gênero: ";
+                getline(cin, pesquisa);
+                lista = biblioteca_.listarLivrosGenero(stringToGenero[pesquisa]);
+
+                break;
+
+            default:
+                break;
+            }
+            for(auto livro : lista) {
+                cout << "Titulo: " << livro->getTitulo() << "\tAutor:" << livro->getAutor() << "\tID: " << livro->getId() << endl;
+            }
+            cin.get();
+
+        } else if(sel == 2) {
+            system("clear");
+
+            int sel_alugar;
+            cout << "1) Buscar Livro" << endl;
+            cout << "2) Alugar Livro por ID" << endl;
+            cout << "3) Alugar Livro por Título e Autor" << endl;
+
+            cin >> sel_alugar;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            if(sel_alugar == 1) {
+                string titulo, autor;
+                cout << "Insira o Título: ";
+                getline(cin, titulo);
+                cout << "Insira o Autor: ";
+                getline(cin, autor);
+
+                shared_ptr<Livro> livro = biblioteca_.buscarLivro(titulo, autor);
+                if(livro) {
+                    cout << "\nResultado: " << endl;
+                    // cout << livro;
+                    cout << "Titulo: " << livro->getTitulo() << "\tAutor:" << livro->getAutor() << "\tID: " << livro->getId() << endl;
+                    
+                    cout << "\nDeseja Alugar este livro? [Y/n]: ";
+                    char alugar;
+                    cin >> alugar;
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    
+                    if(alugar == 'Y' || alugar == 'y') {
+                        usuario->alugarLivro(livro->getId(), biblioteca_);
+                    }
+                } else {
+                    cout << "Livro não encontrado." << endl;
+                    cin.get();
+                }
+                
+
+            } else if(sel_alugar == 2) {
+                int id;
+                cout << "Insira o ID: ";
+                cin >> id;
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                usuario->alugarLivro(id, biblioteca_);
+
+            } else if(sel_alugar == 3) {
+                string titulo, autor;
+                cout << "Insira o Título: ";
+                getline(cin, titulo);
+                cout << "Insira o Autor: ";
+                getline(cin, autor);
+
+                usuario->alugarLivro(titulo, autor, biblioteca_);
+            } else {
+                cout << "Operação Inválida" << endl;
+                cin.get();
+            }
+
+        } else if(sel == 3) {
+            cout << "\n Insira o ID do livro a ser devolvido: ";
+            int id;
+            cin >> id;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            usuario->devolverLivro(id, biblioteca_);
+            
+        } else if(sel == 4) {
+            cout << "Saindo......." << endl;
+            cin.get();
+        } else {
+            cout << "Operação Inválida, insira outra" << endl;
+            cin.get();
+        }
+        
+
+    } while(sel != 4);
 }
 
 void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
-   
+    int sel;
+    do {
+        system("clear");
+        cout << "Menu Funcionario" << endl;
+        cout << "-----------------------" << endl;
+        cout << "1) Adicionar Livro a Biblioteca" << endl;
+        cout << "2) Remover Livro da Biblioteca" << endl;
+        cout << "3) Cadastrar novo Funcionário" << endl;
+        cout << "4) Sair" << endl;
+
+        cin >> sel;
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if(sel == 1) {
+
+        } else if(sel == 2) {
+            system("clear");
+            cout << "Livors presentes na Biblioteca: " << endl;
+            
+            for(auto livro : biblioteca_.listarLivros()) {
+                cout << "Titulo: " << livro->getTitulo() << "\tAutor:" << livro->getAutor() << "\tID: " << livro->getId() << endl;
+            }
+
+            cout << "\nInsira o ID: ";
+            int id;
+            cin >> id;
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            funcionario->removerLivro(id, biblioteca_);
+        } else if(sel == 3) {
+            cadastroFuncionario();
+        } else if(sel == 4) {
+            cout << "Saindo......" << endl;
+            cin.get();
+        } else {
+            cout << "Opção Inválida, selecione outra" << endl;
+            cin.get();
+        }
+    } while(sel != 4);
 }
 
 void Interface::cadastroUsuario() {
@@ -78,6 +255,7 @@ void Interface::cadastroUsuario() {
     users_.push_back(novo_usuario);
 }
 
+
 void Interface::cadastroFuncionario() {
     system("clear");
     cout << "Cadastro Funcionario" << endl;
@@ -112,4 +290,4 @@ void Interface::cadastroFuncionario() {
 
     shared_ptr<Funcionario> novo_funcioario = make_shared<Funcionario>(login, senha);
     users_.push_back(novo_funcioario);
-}
+}    
