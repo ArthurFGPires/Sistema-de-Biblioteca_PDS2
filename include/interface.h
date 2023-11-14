@@ -40,7 +40,7 @@ public:
 
 private:
     vector<shared_ptr<User>> users_;
-    Biblioteca biblioteca_;
+    Biblioteca& biblioteca_;
 };
 
 #endif

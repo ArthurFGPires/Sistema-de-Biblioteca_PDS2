@@ -4,14 +4,13 @@
 #include <iomanip>
 
 Emprestimo::Emprestimo(shared_ptr<Livro> livro, int dias) {
-    this->livro_ = livro;
-    this->data_emprestimo_ = std::chrono::system_clock::now();
-    this->prazo_ = data_emprestimo_ + std::chrono::hours(24 * dias);
-    this->notificacao_ = "";
+    livro_ = livro;
+    prazo_ = std::chrono::system_clock::now() + std::chrono::hours(24 * dias);
+    notificacao_ = "";
 }
 
 shared_ptr<Livro> Emprestimo::getLivro() {
-    return this->livro_;
+    return livro_;
 }
 
 const string Emprestimo::getPrazo() {
@@ -25,17 +24,17 @@ const string Emprestimo::getPrazo() {
 }
 
 void Emprestimo::verificaAtraso() {
-    this->atrasado_ = std::chrono::system_clock::now() > this->prazo_;
+    atrasado_ = std::chrono::system_clock::now() > prazo_;
 }
 
 const string Emprestimo::getNotificacao() {
-    if(this->getAtraso()) {
-        this->notificacao_ = "Livro " + this->livro_->getTitulo() + " esta atrasado, data de devolucao foi " + this->getPrazo();
+    if(getAtraso()) {
+        notificacao_ = "Livro " + livro_->getTitulo() + " esta atrasado, data de devolucao foi " + getPrazo();
     }
-    return this->notificacao_;
+    return notificacao_;
 }
 
 const bool Emprestimo::getAtraso() {
-    this->verificaAtraso();
-    return this->atrasado_;
+    verificaAtraso();
+    return atrasado_;
 }

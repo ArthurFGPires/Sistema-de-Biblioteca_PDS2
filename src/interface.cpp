@@ -11,10 +11,8 @@ map<string, Genero> stringToGenero = {
 };
 
 
-Interface::Interface(Biblioteca& biblioteca) {
-    biblioteca_ = biblioteca;
-
-    shared_ptr<Funcionario> funcionario = std::make_shared<Funcionario>("adimin", "987654321");
+Interface::Interface(Biblioteca& biblioteca) : biblioteca_(biblioteca) {
+    shared_ptr<Funcionario> funcionario = std::make_shared<Funcionario>("adimin", "987654321", biblioteca_);
     users_.push_back(funcionario);
 
     shared_ptr<Livro> livro1 = std::make_shared<Livro>("HP", "J.K.R", Genero::FANTASIA);
@@ -23,11 +21,12 @@ Interface::Interface(Biblioteca& biblioteca) {
     shared_ptr<Livro> livro4 = std::make_shared<Livro>("Duna", "Frank Herbert", Genero::DRAMA);
     shared_ptr<Livro> livro5 = std::make_shared<Livro>("Jogos Vorazes", "Suazanna Collins", Genero::FICCAO);
 
-    funcionario->adicionarLivro(livro1, biblioteca_);
-    funcionario->adicionarLivro(livro2, biblioteca_);
-    funcionario->adicionarLivro(livro3, biblioteca_);
-    funcionario->adicionarLivro(livro4, biblioteca_);
-    funcionario->adicionarLivro(livro5, biblioteca_);
+    funcionario->adicionarLivro(livro1);
+    funcionario->adicionarLivro(livro2);
+    funcionario->adicionarLivro(livro3);
+    funcionario->adicionarLivro(livro4);
+    funcionario->adicionarLivro(livro5);
+
 }
 
 shared_ptr<User> Interface::areaLogin() {
@@ -127,7 +126,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                 break;
             }
             for(auto livro : lista) {
-                cout << "Titulo: " << livro->getTitulo() << "\tAutor:" << livro->getAutor() << "\tID: " << livro->getId() << endl;
+                cout << *livro;
             }
             cin.get();
 
@@ -161,7 +160,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     
                     if(alugar == 'Y' || alugar == 'y') {
-                        usuario->alugarLivro(livro->getId(), biblioteca_);
+                        usuario->alugarLivro(livro->getId());
                     }
                 } else {
                     cout << "Livro não encontrado." << endl;
@@ -175,7 +174,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                 cin >> id;
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                usuario->alugarLivro(id, biblioteca_);
+                usuario->alugarLivro(id);
 
             } else if(sel_alugar == 3) {
                 string titulo, autor;
@@ -184,7 +183,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                 cout << "Insira o Autor: ";
                 getline(cin, autor);
 
-                usuario->alugarLivro(titulo, autor, biblioteca_);
+                usuario->alugarLivro(titulo, autor);
             } else {
                 cout << "Operação Inválida" << endl;
                 cin.get();
@@ -196,7 +195,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
             cin >> id;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            usuario->devolverLivro(id, biblioteca_);
+            usuario->devolverLivro(id);
             
         } else if(sel == 4) {
             cout << "Saindo......." << endl;
@@ -239,7 +238,8 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
             cin >> id;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            funcionario->removerLivro(id, biblioteca_);
+            funcionario->removerLivro(id);
+          
         } else if(sel == 3) {
             cadastroFuncionario();
         } else if(sel == 4) {
@@ -286,10 +286,9 @@ void Interface::cadastroUsuario() {
         
     } while (valido == false);
 
-    shared_ptr<Usuario> novo_usuario = make_shared<Usuario>(login, senha);
+    shared_ptr<Usuario> novo_usuario = make_shared<Usuario>(login, senha, biblioteca_);
     users_.push_back(novo_usuario);
 }
-
 
 void Interface::cadastroFuncionario() {
     system("clear");
@@ -323,6 +322,6 @@ void Interface::cadastroFuncionario() {
         
     } while (valido == false);
 
-    shared_ptr<Funcionario> novo_funcioario = make_shared<Funcionario>(login, senha);
+    shared_ptr<Funcionario> novo_funcioario = make_shared<Funcionario>(login, senha, biblioteca_);
     users_.push_back(novo_funcioario);
 }

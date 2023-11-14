@@ -45,6 +45,8 @@ public:
     // Altera o status do Livro emprestado para falso
     void devolucao();
 
+    friend std::ostream& operator<<(std::ostream& out, Livro& livro);
+
 private:
     string titulo_;
     string autor_;

@@ -11,11 +11,14 @@ using std::vector;
 
 class Funcionario : public User {
 public:
-    Funcionario(const string& login, const string& senha);
+    Funcionario(const string& login, const string& senha, Biblioteca& biblioteca);
 
-    void adicionarLivro(shared_ptr<Livro> livro, Biblioteca& acervo);
+    void adicionarLivro(shared_ptr<Livro> livro);
 
-    void removerLivro(int id, Biblioteca& acervo);
+    void removerLivro(int id);
+
+private:
+    Biblioteca& biblioteca_;
 };
 
 #endif

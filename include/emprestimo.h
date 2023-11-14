@@ -35,7 +35,6 @@ public:
 
 private:
     shared_ptr<Livro> livro_;
-    std::chrono::system_clock::time_point data_emprestimo_;
     std::chrono::system_clock::time_point prazo_;
     string notificacao_;
     bool atrasado_;
