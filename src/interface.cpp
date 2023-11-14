@@ -31,8 +31,8 @@ Interface::Interface(Biblioteca& biblioteca) {
 }
 
 shared_ptr<User> Interface::areaLogin() {
-    
 }
+
 
 void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
     int sel;
@@ -218,9 +218,76 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
 }
 
 void Interface::cadastroUsuario() {
-    
+    system("clear");
+    cout << "Cadastro Usuario" << endl;
+    cout << "======================" << endl;
+
+    bool valido = true;
+    string login, senha;
+
+    do {
+        cout << "Insira um login: ";
+        getline(cin, login);
+
+        for(auto user : users_) {
+            if(user->getLogin() == login) {
+                valido = false;
+                cout << "\nEste usuário já existe, insira outro" << endl;
+            }
+        }
+
+    } while (valido == false);
+
+    do {
+        cout << "Insira uma Senha: ";
+        getline(cin, senha);
+
+        for(auto user : users_) {
+            if(!user->validarSenha(senha)) {
+                valido = false;
+                cout << "\nSenha Inválida, insira outra" << endl;
+            }
+        }
+        
+    } while (valido == false);
+
+    shared_ptr<Usuario> novo_usuario = make_shared<Usuario>(login, senha);
+    users_.push_back(novo_usuario);
 }
 
+
 void Interface::cadastroFuncionario() {
-    
-}
+    system("clear");
+    cout << "Cadastro Funcionario" << endl;
+    cout << "======================" << endl;
+
+    bool valido = true;
+    string login, senha;
+
+    do {
+        cout << "Insira um login: ";
+
+        for(auto user : users_) {
+            if(user->getLogin() == login) {
+                valido = false;
+                cout << "\nEste usuário já existe, insira outro" << endl;
+            }
+        }
+
+    } while (valido == false);
+
+    do {
+        cout << "Insira uma Senha: ";
+
+        for(auto user : users_) {
+            if(!user->validarSenha(senha)) {
+                valido = false;
+                cout << "\nSenha Inválida, insira outra" << endl;
+            }
+        }
+        
+    } while (valido == false);
+
+    shared_ptr<Funcionario> novo_funcioario = make_shared<Funcionario>(login, senha);
+    users_.push_back(novo_funcioario);
+}    
