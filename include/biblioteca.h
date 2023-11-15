@@ -8,6 +8,7 @@
 
 #include "livro.h"
 #include "user.h"
+#include "emprestimo.h"
 
 using std::string;
 using std::list;
@@ -16,7 +17,6 @@ using std::shared_ptr;
 
 class Biblioteca {
 public:
-    
     // Cria uma biblioteca vazia
     Biblioteca();
 
@@ -49,15 +49,11 @@ public:
 
     // Empresta um livro para o Usuario especificado
     // Recebe o titulo e o autor para encontrar o livro
-    shared_ptr<Livro> emprestarLivro(string titulo, string autor);
+    shared_ptr<Emprestimo> emprestarLivro(string titulo, string autor);
 
     // Empresta um livro para o Usuario especificado
     // Recebe o id para encontrar o livro
-    shared_ptr<Livro> emprestarLivro(int id);
-
-    // Realiza a devolução de um livro para a biblioteca
-    void devolverLivro(shared_ptr<Livro> livro);
-
+    shared_ptr<Emprestimo> emprestarLivro(int id);
 
 private:
     list<shared_ptr<Livro>> livros_;

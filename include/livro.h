@@ -45,14 +45,16 @@ public:
     // Altera o status do Livro emprestado para falso
     void devolucao();
 
+    std::string generoParaString(Genero genero);
+
     friend std::ostream& operator<<(std::ostream& out, Livro& livro);
 
 private:
     string titulo_;
     string autor_;
     Genero genero_;
-    int id_;
     bool emprestado_;
+    int id_;
 
     static int proximo_ID;
 };

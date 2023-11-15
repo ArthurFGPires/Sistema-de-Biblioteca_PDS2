@@ -66,6 +66,8 @@ shared_ptr<User> Interface::areaLogin() {
         }
 
     } while(sel != 3);
+
+    return nullptr;
 }
 
 void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
@@ -75,10 +77,19 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
         system("clear");
         cout << "Livros Alugados" << endl;
         cout << "-------------------------------" << endl;
+        
+        int prazo_cont = 0;
+        vector<string> prazos = usuario->getPrazos();
+
         for(auto livro : usuario->listarAlugados()) {
-            cout << *livro << endl;
+            cout << *livro << "\tPrazo: " << prazos[prazo_cont] << endl;
         }
         cout << "-------------------------------" << endl;
+        cout << "\nNotificações: " << endl;
+        for(auto notificacao : usuario->getNotificacoes()) {
+            cout << notificacao << endl;
+        }
+        
         cout << "\n\n";
 
         cout << "Menu Usuário" << endl;
@@ -134,7 +145,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                 break;
             }
             for(auto livro : lista) {
-                cout << *livro;
+                cout << *livro << endl;
             }
             cin.get();
 
@@ -160,7 +171,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                 if(livro) {
                     cout << "\nResultado: " << endl;
                     // cout << livro;
-                    cout << *livro;
+                    cout << *livro << endl;
                     
                     cout << "\nDeseja Alugar este livro? [Y/n]: ";
                     char alugar;
@@ -251,7 +262,7 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
             cout << "Livros presentes na Biblioteca: " << endl;
             
             for(auto livro : biblioteca_.listarLivros()) {
-                cout << *livro;
+                cout << *livro << endl;
             }
             
             cin.get();
@@ -261,7 +272,7 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
             cout << "Livros presentes na Biblioteca: " << endl;
             
             for(auto livro : biblioteca_.listarLivros()) {
-                cout << *livro;
+                cout << *livro << endl;
             }
 
             cout << "\nInsira o ID: ";

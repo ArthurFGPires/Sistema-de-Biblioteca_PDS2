@@ -14,37 +14,26 @@ vector<shared_ptr<Livro>> Usuario::listarAlugados() {
     return livrosAlugados;
 }
 
-void Usuario::alugarLivro(string titulo, string autor) {
-    shared_ptr<Livro> livro = biblioteca_.emprestarLivro(titulo, autor);
+void Usuario::alugarLivro(const string& titulo, const string& autor) {
+    shared_ptr<Emprestimo> emprestimo = biblioteca_.emprestarLivro(titulo, autor);
 
-    if (livro) {
-        shared_ptr<Emprestimo> emprestimo = std::make_shared<Emprestimo>(livro);
+    if(emprestimo)
         alugados_.push_back(emprestimo);
-    }
 }
 
 void Usuario::alugarLivro(int id) {
-    std::shared_ptr<Livro> livro = biblioteca_.emprestarLivro(id);
+    shared_ptr<Emprestimo> emprestimo = biblioteca_.emprestarLivro(id);
 
-    if (livro) {
-        shared_ptr<Emprestimo> emprestimo = std::make_shared<Emprestimo>(livro);
+    if(emprestimo)
         alugados_.push_back(emprestimo);
-    }
 }
 
 void Usuario::devolverLivro(int id) {
-    auto it = alugados_.begin();
-
-    while (it != alugados_.end()) {
-        if ((*it)->getLivro()->getId() == id) {
-            shared_ptr<Livro> livro = (*it)->getLivro();
-            biblioteca_.devolverLivro(livro);
-            
-            it = alugados_.erase(it);
-            break;
-        } 
-        else {
-            ++it;
+    for(auto it = alugados_.begin(); it != alugados_.end(); ++it) {
+        if((*it)->getLivro()->getId() == id) {
+            (*it)->getLivro()->devolucao();
+            alugados_.erase(it);
+            return;
         }
     }
 }

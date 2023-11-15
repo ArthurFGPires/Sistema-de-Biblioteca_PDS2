@@ -24,7 +24,7 @@ public:
     
     // Adiciona um livro à lista de alugados do usuário
     // Procura o Livro por título e autor
-    void alugarLivro(string titulo, string autor);
+    void alugarLivro(const string& titulo, const string& autor);
 
     // Adiciona um livro à lista de alugados do usuário
     // Procura o Livro por ID

@@ -13,7 +13,7 @@ shared_ptr<Livro> Emprestimo::getLivro() {
     return livro_;
 }
 
-const string Emprestimo::getPrazo() {
+const string Emprestimo::getPrazo() const{
     std::time_t prazo_time = std::chrono::system_clock::to_time_t(prazo_);
     std::tm prazo_tm = *std::localtime(&prazo_time);
     
@@ -29,7 +29,7 @@ void Emprestimo::verificaAtraso() {
 
 const string Emprestimo::getNotificacao() {
     if(getAtraso()) {
-        notificacao_ = "Livro " + livro_->getTitulo() + " esta atrasado, data de devolucao foi " + getPrazo();
+        notificacao_ = "Livro " + livro_->getTitulo() + " está atrasado, data de devolucao foi " + getPrazo();
     }
     return notificacao_;
 }

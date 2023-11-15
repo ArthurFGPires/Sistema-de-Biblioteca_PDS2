@@ -1,29 +1,10 @@
 #include "../include/livro.h"
 
-std::string generoParaString(Genero genero) {
-    switch (genero) {
-        case Genero::FICCAO: return "Ficção";
-        case Genero::DRAMA: return "Drama";
-        case Genero::SUSPENSE: return "Suspense";
-        case Genero::ROMANCE: return "Romance";
-        case Genero::NOVELA: return "Novela";
-        case Genero::CIENTIFICO: return "Científico";
-        case Genero::FANTASIA: return "Fantasia";
-        default: return "Desconhecido";
-    }
-}
-
-
 int Livro::proximo_ID = 10001;
 
-Livro::Livro(string titulo, string autor, Genero genero) {
-    titulo_ = titulo;
-    autor_ = autor;
-    genero_ = genero;
-    emprestado_ = false;
-    id_ = proximo_ID;
-    proximo_ID++;
-}
+Livro::Livro(string titulo, string autor, Genero genero)
+    : titulo_(titulo), autor_(autor), genero_(genero), emprestado_(false), id_(proximo_ID++)
+{}
 
 string Livro::getTitulo() {
     return titulo_;
@@ -55,6 +36,19 @@ void Livro::devolucao() {
 
 std::ostream& operator<<(std::ostream& out, Livro& livro) {
     out << "Titulo: " << livro.getTitulo() << "\tAutor:" << livro.getAutor() << "\tGenêro: " 
-    << generoParaString(livro.getGenero()) << "\tID: " << livro.getId() << std::endl;
+    << livro.generoParaString(livro.getGenero()) << "\tID: " << livro.getId();
     return out;
+}
+
+std::string Livro::generoParaString(Genero genero) {
+    switch (genero) {
+        case Genero::FICCAO: return "Ficção";
+        case Genero::DRAMA: return "Drama";
+        case Genero::SUSPENSE: return "Suspense";
+        case Genero::ROMANCE: return "Romance";
+        case Genero::NOVELA: return "Novela";
+        case Genero::CIENTIFICO: return "Científico";
+        case Genero::FANTASIA: return "Fantasia";
+        default: return "Desconhecido";
+    }
 }
