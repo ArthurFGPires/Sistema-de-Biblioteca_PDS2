@@ -73,6 +73,14 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
     
     do {
         system("clear");
+        cout << "Livros Alugados" << endl;
+        cout << "-------------------------------" << endl;
+        for(auto livro : usuario->listarAlugados()) {
+            cout << *livro << endl;
+        }
+        cout << "-------------------------------" << endl;
+        cout << "\n\n";
+
         cout << "Menu Usuário" << endl;
         cout << "-------------------------------" << endl;
         cout << "1) Listar livros da Biblioteca" << endl;
@@ -152,7 +160,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                 if(livro) {
                     cout << "\nResultado: " << endl;
                     // cout << livro;
-                    cout << "Titulo: " << livro->getTitulo() << "\tAutor:" << livro->getAutor() << "\tID: " << livro->getId() << endl;
+                    cout << *livro;
                     
                     cout << "\nDeseja Alugar este livro? [Y/n]: ";
                     char alugar;
@@ -190,7 +198,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
             }
 
         } else if(sel == 3) {
-            cout << "\n Insira o ID do livro a ser devolvido: ";
+            cout << "\nInsira o ID do livro a ser devolvido: ";
             int id;
             cin >> id;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -224,13 +232,36 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if(sel == 1) {
+            system("clear");
+            string titulo, autor, genero;
+
+            cout << "Insira o Título do Livro: ";
+            getline(cin, titulo);
+
+            cout << "Insira o Autor do Livro: ";
+            getline(cin, autor);
+
+            cout << "Insira o Gênero do Livro: ";
+            getline(cin, genero);
+
+            shared_ptr<Livro> novo_livro = make_shared<Livro>(titulo, autor, stringToGenero[genero]);
+            funcionario->adicionarLivro(novo_livro);
+
+            cout << "\nLivro Adicionado" << endl;
+            cout << "Livros presentes na Biblioteca: " << endl;
+            
+            for(auto livro : biblioteca_.listarLivros()) {
+                cout << *livro;
+            }
+            
+            cin.get();
 
         } else if(sel == 2) {
             system("clear");
-            cout << "Livors presentes na Biblioteca: " << endl;
+            cout << "Livros presentes na Biblioteca: " << endl;
             
             for(auto livro : biblioteca_.listarLivros()) {
-                cout << "Titulo: " << livro->getTitulo() << "\tAutor:" << livro->getAutor() << "\tID: " << livro->getId() << endl;
+                cout << *livro;
             }
 
             cout << "\nInsira o ID: ";
@@ -300,6 +331,7 @@ void Interface::cadastroFuncionario() {
 
     do {
         cout << "Insira um login: ";
+        getline(cin, login);
 
         for(auto user : users_) {
             if(user->getLogin() == login) {
@@ -312,6 +344,7 @@ void Interface::cadastroFuncionario() {
 
     do {
         cout << "Insira uma Senha: ";
+        getline(cin, senha);
 
         for(auto user : users_) {
             if(!user->validarSenha(senha)) {

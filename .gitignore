@@ -1,2 +1,3 @@
 build/*.o
-Sistema_Bilbioteca
+Sistema_Biblioteca
+.vscode/*
