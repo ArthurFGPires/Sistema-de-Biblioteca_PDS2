@@ -83,6 +83,7 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
 
         for(auto livro : usuario->listarAlugados()) {
             cout << *livro << "\tPrazo: " << prazos[prazo_cont] << endl;
+            prazo_cont++;
         }
         cout << "-------------------------------" << endl;
         cout << "\nNotificações: " << endl;
