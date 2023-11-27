@@ -15,20 +15,30 @@ vector<shared_ptr<Livro>> Usuario::listarAlugados() {
 }
 
 void Usuario::alugarLivro(const string& titulo, const string& autor) {
-    shared_ptr<Emprestimo> emprestimo = biblioteca_.emprestarLivro(titulo, autor);
+    try {
+        shared_ptr<Emprestimo> emprestimo = biblioteca_.emprestarLivro(titulo, autor);
 
-    if(emprestimo)
-        alugados_.push_back(emprestimo);
+        if(emprestimo){
+            alugados_.push_back(emprestimo);
+        }
+    } catch (const Erro& erro) {
+        std::cout << erro.what() << '\n';
+    }
 }
 
-void Usuario::alugarLivro(int id) {
-    shared_ptr<Emprestimo> emprestimo = biblioteca_.emprestarLivro(id);
+void Usuario::alugarLivro(const int id) {
+    try {
+        shared_ptr<Emprestimo> emprestimo = biblioteca_.emprestarLivro(id);
 
-    if(emprestimo)
-        alugados_.push_back(emprestimo);
+        if(emprestimo){
+            alugados_.push_back(emprestimo);
+        }
+    } catch (const Erro& erro) {
+        std::cout << erro.what() << '\n';
+    }
 }
 
-void Usuario::devolverLivro(int id) {
+void Usuario::devolverLivro(const int id) {  
     for(auto it = alugados_.begin(); it != alugados_.end(); ++it) {
         if((*it)->getLivro()->getId() == id) {
             (*it)->getLivro()->devolucao();
@@ -36,6 +46,7 @@ void Usuario::devolverLivro(int id) {
             return;
         }
     }
+    throw Erro("Erro: ID não encontrado na lista de emprestimos");
 }
 
 vector<string> Usuario::getNotificacoes() {

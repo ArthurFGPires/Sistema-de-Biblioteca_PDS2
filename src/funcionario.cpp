@@ -4,9 +4,19 @@ Funcionario::Funcionario(const string& login, const string& senha, Biblioteca& b
 : User(login, senha, 1),  biblioteca_(biblioteca) {}
 
 void Funcionario::adicionarLivro(shared_ptr<Livro> livro) {
-    biblioteca_.adicionarLivro(livro, *this);
+    try {
+        biblioteca_.adicionarLivro(livro, *this);
+    } catch (const Erro& e) {
+        std::cout << e.what() << std::endl;
+        std::cin.get();
+    }
 }
 
 void Funcionario::removerLivro(int id) {
-    biblioteca_.removerLivro(id, *this);
+    try {
+        biblioteca_.removerLivro(id, *this);
+    } catch (const Erro& e) {
+        std::cout << e.what() << std::endl;
+        std::cin.get();
+    }
 }

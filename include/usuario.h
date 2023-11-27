@@ -5,10 +5,12 @@
 #include "livro.h"
 #include "user.h"
 #include "emprestimo.h"
+#include "erro.h"
 
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <string>
 
 using std::string;
 using std::vector;
@@ -28,10 +30,10 @@ public:
 
     // Adiciona um livro à lista de alugados do usuário
     // Procura o Livro por ID
-    void alugarLivro(int id);
+    void alugarLivro(const int id);
 
     // Devolve um livro da lista de alugados
-    void devolverLivro(int id);
+    void devolverLivro(const int id);
 
     // Retorna um vector com todas as notificações para o usuario
     vector<string> getNotificacoes();

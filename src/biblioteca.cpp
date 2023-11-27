@@ -5,6 +5,8 @@ Biblioteca::Biblioteca() {}
 void Biblioteca::adicionarLivro(shared_ptr<Livro> adicionar, User& user) {
     if(user.getPermissao() == 1) {
         livros_.push_back(adicionar);
+    } else {
+        throw Erro("Erro: Usuario não tem permissão para executar essa ação");
     }
 }
 
@@ -18,6 +20,8 @@ void Biblioteca::removerLivro(int id, User& user) {
                 break;
             }
         }
+    } else {
+        throw Erro("Erro: Usuário não tem permissão para tal ação");
     }
 }
 
@@ -40,13 +44,28 @@ list<shared_ptr<Livro>> Biblioteca::listarLivrosTitulo(const string& titulo) {
     return lista_livros;
 }
 
-list<shared_ptr<Livro>> Biblioteca::listarLivrosGenero(Genero genero) {
-    list<shared_ptr<Livro>> lista_livros;
-    for (auto& l : livros_) {
-        if (l->getGenero() == genero && !l->getEmprestado())
-            lista_livros.push_back(l);
+list<shared_ptr<Livro>> Biblioteca::listarLivrosGenero(const string& genero) {
+    std::map<string, Genero> stringToGenero = {
+        {"FICCAO", Genero::FICCAO},
+        {"DRAMA", Genero::DRAMA},
+        {"SUSPENSE", Genero::SUSPENSE},
+        {"ROMANCE", Genero::ROMANCE},
+        {"NOVELA", Genero::NOVELA},
+        {"CIENTIFICO", Genero::CIENTIFICO},
+        {"FANTASIA", Genero::FANTASIA}
+    };
+    
+    auto it = stringToGenero.find(genero);
+    if(it != stringToGenero.end()) {
+        list<shared_ptr<Livro>> lista_livros;
+        for (auto& l : livros_) {
+            if (l->getGenero() == stringToGenero[genero] && !l->getEmprestado())
+                lista_livros.push_back(l);
+        }
+        return lista_livros;
+    } else {
+        throw Erro("Erro: Genero Inválido");
     }
-    return lista_livros;
 }
 
 list<shared_ptr<Livro>> Biblioteca::listarLivrosAutor(const string& autor) {
@@ -58,7 +77,7 @@ list<shared_ptr<Livro>> Biblioteca::listarLivrosAutor(const string& autor) {
     return lista_livros;
 }
 
-shared_ptr<Livro> Biblioteca::buscarLivro(string titulo, string autor) {
+shared_ptr<Livro> Biblioteca::buscarLivro(const string& titulo, const string& autor) {
     auto it = std::find_if(livros_.begin(), livros_.end(), [titulo, autor](const auto& livro) {
         return livro->getTitulo() == titulo && livro->getAutor() == autor && !livro->getEmprestado();
     });
@@ -66,11 +85,11 @@ shared_ptr<Livro> Biblioteca::buscarLivro(string titulo, string autor) {
     if (it != livros_.end()) {
         return *it;
     } else {
-        return nullptr;
+        throw Erro("Erro: Livro não encontrado");
     }
 }
 
-shared_ptr<Livro> Biblioteca::buscarLivro(int id) {
+shared_ptr<Livro> Biblioteca::buscarLivro(const int id) {
     auto it = std::find_if(livros_.begin(), livros_.end(), [id](const auto& livro) {
         return livro->getId() == id && !livro->getEmprestado();
     });
@@ -78,30 +97,26 @@ shared_ptr<Livro> Biblioteca::buscarLivro(int id) {
     if (it != livros_.end()) {
         return *it;
     } else {
-        return nullptr;
+        throw("Erro: Livro não encontrado");
     }
 }
 
-shared_ptr<Emprestimo> Biblioteca::emprestarLivro(string titulo, string autor) {
-    for (auto it = livros_.begin(); it != livros_.end(); ++it) {
+shared_ptr<Emprestimo> Biblioteca::emprestarLivro(const string& titulo, const string& autor) {
+    try {
+        shared_ptr<Livro> livro = buscarLivro(titulo, autor);
 
-        if (titulo == (*it)->getTitulo() && autor == (*it)->getAutor() && !(*it)->getEmprestado()) {
-            
-            (*it)->emprestar(); 
-            return std::make_shared<Emprestimo>((*it));
-        }
+        return std::make_shared<Emprestimo>(livro);
+    } catch (const Erro& e) {
+        throw e;
     }
-    return nullptr;
 }
 
-shared_ptr<Emprestimo> Biblioteca::emprestarLivro(int id) {
-    for (auto it = livros_.begin(); it != livros_.end(); ++it) {
+shared_ptr<Emprestimo> Biblioteca::emprestarLivro(const int id) {
+    try {
+        shared_ptr<Livro> livro = buscarLivro(id);
 
-        if (id == (*it)->getId() && !(*it)->getEmprestado()) {
-            
-            (*it)->emprestar(); 
-            return std::make_shared<Emprestimo>((*it));
-        }
+        return std::make_shared<Emprestimo>(livro);
+    } catch (const Erro& e) {
+        throw e;
     }
-    return nullptr;
 }

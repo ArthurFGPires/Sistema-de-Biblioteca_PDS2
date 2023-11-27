@@ -7,12 +7,14 @@
 #include "biblioteca.h"
 #include "emprestimo.h"
 #include "livro.h"
+#include "erro.h"
 
 #include <iostream>
 #include <string>
 #include <memory>
 #include <vector>
 #include <map>
+#include <cctype>
 
 using namespace std;
 

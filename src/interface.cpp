@@ -1,6 +1,6 @@
 #include "../include/interface.h"
 
-map<string, Genero> stringToGenero = {
+std::map<string, Genero> stringToGenero = {
     {"FICCAO", Genero::FICCAO},
     {"DRAMA", Genero::DRAMA},
     {"SUSPENSE", Genero::SUSPENSE},
@@ -9,7 +9,6 @@ map<string, Genero> stringToGenero = {
     {"CIENTIFICO", Genero::CIENTIFICO},
     {"FANTASIA", Genero::FANTASIA}
 };
-
 
 Interface::Interface(Biblioteca& biblioteca) : biblioteca_(biblioteca) {
     shared_ptr<Funcionario> funcionario = std::make_shared<Funcionario>("adimin", "987654321", biblioteca_);
@@ -30,7 +29,7 @@ Interface::Interface(Biblioteca& biblioteca) : biblioteca_(biblioteca) {
 }
 
 shared_ptr<User> Interface::areaLogin() {
-    int sel;
+    char sel;
     do {
         system("clear");
         cout << "1) Logar" << endl;
@@ -39,8 +38,10 @@ shared_ptr<User> Interface::areaLogin() {
         cin >> sel;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if(sel == 1) {
+        if(sel == '1') {
             system("clear");
+            cout << "Área de Login" << '\n';
+            cout << "===============================" << '\n';
 
             cout << "Login : ";
             string login;
@@ -55,9 +56,9 @@ shared_ptr<User> Interface::areaLogin() {
                     return user;
             }
 
-        } else if (sel == 2) {
+        } else if (sel == '2') {
             cadastroUsuario();
-        } else if (sel == 3) {
+        } else if (sel == '3') {
             cout << "Saindo....." << endl;
             return nullptr;
         } else {
@@ -65,13 +66,13 @@ shared_ptr<User> Interface::areaLogin() {
             cin.get();
         }
 
-    } while(sel != 3);
+    } while(sel != '3');
 
     return nullptr;
 }
 
 void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
-    int sel;
+    char sel;
     
     do {
         system("clear");
@@ -103,9 +104,9 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
         cin >> sel;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         
-        if(sel == 1) {
-            cout << "\n\n";
-            int op_listar;
+        if(sel == '1') {
+            system("clear");
+            char op_listar;
             cout << "1) Listar todos os livros disponíveis" << endl;
             cout << "2) Listar livros com um título específico" << endl;
             cout << "3) Listar livros de um autor específico" << endl;
@@ -119,27 +120,35 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
 
             switch (op_listar)
             {
-            case 1:
+            case '1':
                 lista = biblioteca_.listarLivros();
                 break;
             
-            case 2:
+            case '2':
                 cout << "Insira o título: ";
                 getline(cin, pesquisa);
                 lista = biblioteca_.listarLivrosTitulo(pesquisa);
                 break; 
 
-            case 3:
+            case '3':
                 cout << "Insira o Autor: ";
                 getline(cin, pesquisa);
                 lista = biblioteca_.listarLivrosAutor(pesquisa);
                 break;
             
-            case 4:
+            case '4':
                 cout << "Insira o Gênero: ";
                 getline(cin, pesquisa);
-                lista = biblioteca_.listarLivrosGenero(stringToGenero[pesquisa]);
+                for(char &c : pesquisa) {
+                    c = toupper(c);
+                }
 
+                try {
+                    lista = biblioteca_.listarLivrosGenero(pesquisa);
+                } catch (const Erro& e) {
+                    cout << e.what() << endl;
+                    cin.get();
+                }
                 break;
 
             default:
@@ -150,10 +159,10 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
             }
             cin.get();
 
-        } else if(sel == 2) {
+        } else if(sel == '2') {
             system("clear");
 
-            int sel_alugar;
+            char sel_alugar;
             cout << "1) Buscar Livro" << endl;
             cout << "2) Alugar Livro por ID" << endl;
             cout << "3) Alugar Livro por Título e Autor" << endl;
@@ -161,17 +170,18 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
             cin >> sel_alugar;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            if(sel_alugar == 1) {
+            if(sel_alugar == '1') {
                 string titulo, autor;
                 cout << "Insira o Título: ";
                 getline(cin, titulo);
                 cout << "Insira o Autor: ";
                 getline(cin, autor);
 
-                shared_ptr<Livro> livro = biblioteca_.buscarLivro(titulo, autor);
-                if(livro) {
+                try{
+                    shared_ptr<Livro> livro = biblioteca_.buscarLivro(titulo, autor);
+
                     cout << "\nResultado: " << endl;
-                    // cout << livro;
+
                     cout << *livro << endl;
                     
                     cout << "\nDeseja Alugar este livro? [Y/n]: ";
@@ -182,42 +192,67 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
                     if(alugar == 'Y' || alugar == 'y') {
                         usuario->alugarLivro(livro->getId());
                     }
-                } else {
-                    cout << "Livro não encontrado." << endl;
+
+                } catch (const Erro& e) {
+                    cout << e.what() << endl;
                     cin.get();
                 }
-                
 
-            } else if(sel_alugar == 2) {
+            } else if(sel_alugar == '2') {
                 int id;
                 cout << "Insira o ID: ";
-                cin >> id;
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                if(!(cin >> id)) {
+                    cout << "ID Inválido. Insira um numero definido" << endl;
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    cin.get();
+                } else {
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    try {
+                        usuario->alugarLivro(id);
+                    } catch (const Erro& e) {
+                        cout << e.what() << endl;
+                        cin.get();
+                    }
+                }
 
-                usuario->alugarLivro(id);
-
-            } else if(sel_alugar == 3) {
+            } else if(sel_alugar == '3') {
                 string titulo, autor;
                 cout << "Insira o Título: ";
                 getline(cin, titulo);
                 cout << "Insira o Autor: ";
                 getline(cin, autor);
 
-                usuario->alugarLivro(titulo, autor);
+                try {
+                    usuario->alugarLivro(titulo, autor);
+                } catch (const Erro& e) {
+                    cout << e.what() << endl;
+                    cin.get();
+                }
+
             } else {
                 cout << "Operação Inválida" << endl;
                 cin.get();
             }
 
-        } else if(sel == 3) {
+        } else if(sel == '3') {
             cout << "\nInsira o ID do livro a ser devolvido: ";
             int id;
-            cin >> id;
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-            usuario->devolverLivro(id);
+            if(!(cin >> id)) {
+                cout << "ID Inválido. Insira um numero definido" << endl;
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin.get();
+            } else {
+                try{
+                    usuario->devolverLivro(id);
+                } catch (const Erro& e) {
+                    cout << e.what() << endl;
+                    cin.get();
+                }
+            }
             
-        } else if(sel == 4) {
+        } else if(sel == '4') {
             cout << "Saindo......." << endl;
             cin.get();
         } else {
@@ -226,11 +261,11 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
         }
         
 
-    } while(sel != 4);
+    } while(sel != '4');
 }
 
 void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
-    int sel;
+    char sel;
     do {
         system("clear");
         cout << "Menu Funcionario" << endl;
@@ -243,7 +278,7 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
         cin >> sel;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if(sel == 1) {
+        if(sel == '1') {
             system("clear");
             string titulo, autor, genero;
 
@@ -268,7 +303,7 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
             
             cin.get();
 
-        } else if(sel == 2) {
+        } else if(sel == '2') {
             system("clear");
             cout << "Livros presentes na Biblioteca: " << endl;
             
@@ -278,21 +313,24 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
 
             cout << "\nInsira o ID: ";
             int id;
-            cin >> id;
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-            funcionario->removerLivro(id);
-          
-        } else if(sel == 3) {
+            if(!(cin >> id)) {
+                cout << "ID Inválido. Insira um numero definido" << endl;
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin.get();
+            } else {
+                funcionario->removerLivro(id);
+            }
+        } else if(sel == '3') {
             cadastroFuncionario();
-        } else if(sel == 4) {
+        } else if(sel == '4') {
             cout << "Saindo......" << endl;
             cin.get();
         } else {
             cout << "Opção Inválida, selecione outra" << endl;
             cin.get();
         }
-    } while(sel != 4);
+    } while(sel != '4');
 }
 
 void Interface::cadastroUsuario() {
@@ -300,7 +338,7 @@ void Interface::cadastroUsuario() {
     cout << "Cadastro Usuario" << endl;
     cout << "======================" << endl;
 
-    bool valido = true;
+    bool valido;
     string login, senha;
 
     do {
@@ -311,6 +349,8 @@ void Interface::cadastroUsuario() {
             if(user->getLogin() == login) {
                 valido = false;
                 cout << "\nEste usuário já existe, insira outro" << endl;
+            } else {
+                valido = true;
             }
         }
 
@@ -324,6 +364,8 @@ void Interface::cadastroUsuario() {
             if(!user->validarSenha(senha)) {
                 valido = false;
                 cout << "\nSenha Inválida, insira outra" << endl;
+            } else {
+                valido = true;
             }
         }
         
@@ -349,6 +391,8 @@ void Interface::cadastroFuncionario() {
             if(user->getLogin() == login) {
                 valido = false;
                 cout << "\nEste usuário já existe, insira outro" << endl;
+            } else {
+                valido = true;
             }
         }
 
@@ -362,6 +406,8 @@ void Interface::cadastroFuncionario() {
             if(!user->validarSenha(senha)) {
                 valido = false;
                 cout << "\nSenha Inválida, insira outra" << endl;
+            } else {
+                valido = true;
             }
         }
         
