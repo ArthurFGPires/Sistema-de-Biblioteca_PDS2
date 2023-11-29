@@ -15,7 +15,7 @@ public:
 
     void adicionarLivro(shared_ptr<Livro> livro);
 
-    void removerLivro(int id);
+    void removerLivro(const int id);
 
 private:
     Biblioteca& biblioteca_;

@@ -12,7 +12,7 @@ void Funcionario::adicionarLivro(shared_ptr<Livro> livro) {
     }
 }
 
-void Funcionario::removerLivro(int id) {
+void Funcionario::removerLivro(const int id) {
     try {
         biblioteca_.removerLivro(id, *this);
     } catch (const Erro& e) {

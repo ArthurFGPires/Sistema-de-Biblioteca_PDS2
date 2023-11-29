@@ -38,6 +38,7 @@ public:
     // Retorna um vector com todas as notificações para o usuario
     vector<string> getNotificacoes();
 
+    // Retorna um vector com todos os prazos dos livros
     vector<string> getPrazos();
 
 private:
