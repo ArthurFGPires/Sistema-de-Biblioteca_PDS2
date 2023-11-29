@@ -3,9 +3,10 @@
 #include <string>
 #include <iomanip>
 
-Emprestimo::Emprestimo(shared_ptr<Livro> livro, int dias) {
+Emprestimo::Emprestimo(shared_ptr<Livro> livro, int dias, int horas, int minutos) {
     livro_ = livro;
-    prazo_ = std::chrono::system_clock::now() + std::chrono::hours(24 * dias);
+    prazo_ = std::chrono::system_clock::now() + std::chrono::hours(24 * dias + horas) 
+        + std::chrono::minutes(minutos);
     notificacao_ = "";
 }
 

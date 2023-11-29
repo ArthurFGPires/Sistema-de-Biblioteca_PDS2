@@ -22,7 +22,7 @@ void Usuario::alugarLivro(const string& titulo, const string& autor) {
             alugados_.push_back(emprestimo);
         }
     } catch (const Erro& erro) {
-        std::cout << erro.what() << '\n';
+        throw;
     }
 }
 
@@ -33,8 +33,8 @@ void Usuario::alugarLivro(const int id) {
         if(emprestimo){
             alugados_.push_back(emprestimo);
         }
-    } catch (const Erro& erro) {
-        std::cout << erro.what() << '\n';
+    } catch (const Erro& e) {
+        throw; 
     }
 }
 

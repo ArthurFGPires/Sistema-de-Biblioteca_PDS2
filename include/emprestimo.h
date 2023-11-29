@@ -14,7 +14,7 @@ public:
     // Por padrão da um prazo de 7 dias para devolução
     // Caso o necessite que o empréstimo seja proolongado, crie um novo emprestimo
     // PRÉ-CONDIÇÃO: dias deve ser maior que 0
-    Emprestimo(shared_ptr<Livro> livro, int dias = 7);
+    Emprestimo(shared_ptr<Livro> livro, int dias = 7, int horas = 0, int minutos = 0);
 
     // Retorna o livro referente ao emprestimo
     shared_ptr<Livro> getLivro();

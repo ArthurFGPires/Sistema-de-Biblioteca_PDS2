@@ -97,7 +97,7 @@ shared_ptr<Livro> Biblioteca::buscarLivro(const int id) {
     if (it != livros_.end()) {
         return *it;
     } else {
-        throw("Erro: Livro não encontrado");
+        throw Erro("Erro: Livro não encontrado");
     }
 }
 
@@ -105,9 +105,10 @@ shared_ptr<Emprestimo> Biblioteca::emprestarLivro(const string& titulo, const st
     try {
         shared_ptr<Livro> livro = buscarLivro(titulo, autor);
 
-        return std::make_shared<Emprestimo>(livro);
+        livro->emprestar();
+        return std::make_shared<Emprestimo>(livro, 0, 0, 1);
     } catch (const Erro& e) {
-        throw e;
+        throw;
     }
 }
 
@@ -115,8 +116,9 @@ shared_ptr<Emprestimo> Biblioteca::emprestarLivro(const int id) {
     try {
         shared_ptr<Livro> livro = buscarLivro(id);
 
-        return std::make_shared<Emprestimo>(livro);
+        livro->emprestar();
+        return std::make_shared<Emprestimo>(livro, 0, 0, 1);
     } catch (const Erro& e) {
-        throw e;
+        throw;
     }
 }
