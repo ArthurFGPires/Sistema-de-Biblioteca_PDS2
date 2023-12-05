@@ -14,18 +14,27 @@ Interface::Interface(Biblioteca& biblioteca) : biblioteca_(biblioteca) {
     shared_ptr<Funcionario> funcionario = std::make_shared<Funcionario>("adimin", "987654321", biblioteca_);
     users_.push_back(funcionario);
 
-    shared_ptr<Livro> livro1 = std::make_shared<Livro>("HP", "J.K.R", Genero::FANTASIA);
-    shared_ptr<Livro> livro2 = std::make_shared<Livro>("LOTR", "J.R.R", Genero::FANTASIA);
+    shared_ptr<Livro> livro1 = std::make_shared<Livro>("Harry Potter e a Pedra Filosofal", "J.K. Rowling", Genero::FANTASIA);
+    shared_ptr<Livro> livro2 = std::make_shared<Livro>("O Senhor dos Anéis: A Sociedade do Anel", "J.R.R. Tolkien", Genero::FANTASIA);
     shared_ptr<Livro> livro3 = std::make_shared<Livro>("Auto da Barca do Inferno", "Gil Vicente", Genero::DRAMA);
-    shared_ptr<Livro> livro4 = std::make_shared<Livro>("Duna", "Frank Herbert", Genero::DRAMA);
-    shared_ptr<Livro> livro5 = std::make_shared<Livro>("Jogos Vorazes", "Suazanna Collins", Genero::FICCAO);
+    shared_ptr<Livro> livro4 = std::make_shared<Livro>("Duna", "Frank Herbert", Genero::FICCAO);
+    shared_ptr<Livro> livro5 = std::make_shared<Livro>("Jogos Vorazes", "Suzanne Collins", Genero::FICCAO);
+    shared_ptr<Livro> livro6 = std::make_shared<Livro>("Cem Anos de Solidão", "Gabriel García Márquez", Genero::FICCAO);
+    shared_ptr<Livro> livro7 = std::make_shared<Livro>("1984", "George Orwell", Genero::FICCAO);
+    shared_ptr<Livro> livro8 = std::make_shared<Livro>("Orgulho e Preconceito", "Jane Austen", Genero::ROMANCE);
+    shared_ptr<Livro> livro9 = std::make_shared<Livro>("A Metamorfose", "Franz Kafka", Genero::FICCAO);
+    shared_ptr<Livro> livro10 = std::make_shared<Livro>("O Pequeno Príncipe", "Antoine de Saint-Exupéry", Genero::FICCAO);
 
     funcionario->adicionarLivro(livro1);
     funcionario->adicionarLivro(livro2);
     funcionario->adicionarLivro(livro3);
     funcionario->adicionarLivro(livro4);
     funcionario->adicionarLivro(livro5);
-
+    funcionario->adicionarLivro(livro6);
+    funcionario->adicionarLivro(livro7);
+    funcionario->adicionarLivro(livro8);
+    funcionario->adicionarLivro(livro9);
+    funcionario->adicionarLivro(livro10);
 }
 
 shared_ptr<User> Interface::areaLogin() {
@@ -33,8 +42,9 @@ shared_ptr<User> Interface::areaLogin() {
     do {
         system("clear");
         cout << "1) Logar" << endl;
-        cout << "2) Cadastrar" << endl;
+        cout << "2) Cadastrar Usuario" << endl;
         cout << "3) Sair" << endl;
+        cout << "\nOpção: ";
         cin >> sel;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -100,10 +110,12 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
         cout << "2) Alugar Livro" << endl;
         cout << "3) Devolver Livro" << endl;
         cout << "4) Sair" << endl;
+        cout << "\nOpção: ";
 
         cin >> sel;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         
+        cout << '\n';
         if(sel == '1') {
             system("clear");
             char op_listar;
@@ -111,13 +123,15 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
             cout << "2) Listar livros com um título específico" << endl;
             cout << "3) Listar livros de um autor específico" << endl;
             cout << "4) Listar livros de um gênero específico" << endl;
+            cout << "\nOpção: ";
             
             cin >> op_listar;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             list<shared_ptr<Livro>> lista;
             string pesquisa;
-
+            
+            cout << '\n';
             switch (op_listar)
             {
             case '1':
@@ -166,10 +180,12 @@ void Interface::menuUsuario(shared_ptr<Usuario> usuario) {
             cout << "1) Buscar Livro" << endl;
             cout << "2) Alugar Livro por ID" << endl;
             cout << "3) Alugar Livro por Título e Autor" << endl;
+            cout << "\nOpção: ";
 
             cin >> sel_alugar;
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+            cout << '\n';
             if(sel_alugar == '1') {
                 string titulo, autor;
                 cout << "Insira o Título: ";
@@ -274,10 +290,12 @@ void Interface::menuFuncionario(shared_ptr<Funcionario> funcionario) {
         cout << "2) Remover Livro da Biblioteca" << endl;
         cout << "3) Cadastrar novo Funcionário" << endl;
         cout << "4) Sair" << endl;
+        cout << "\nOpção: ";
 
         cin >> sel;
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+        cout << '\n';
         if(sel == '1') {
             system("clear");
             string titulo, autor, genero;
