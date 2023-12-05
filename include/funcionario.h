@@ -9,16 +9,17 @@
 
 using std::vector;
 
-class Funcionario : public User {
+class Funcionario : public User
+{
 public:
-    Funcionario(const string& login, const string& senha, Biblioteca& biblioteca);
+  Funcionario(const string &login, const string &senha, Biblioteca &biblioteca);
 
-    void adicionarLivro(shared_ptr<Livro> livro);
+  void adicionarLivro(shared_ptr<Livro> livro);
 
-    void removerLivro(const int id);
+  void removerLivro(const int id);
 
 private:
-    Biblioteca& biblioteca_;
+  Biblioteca &biblioteca_;
 };
 
 #endif

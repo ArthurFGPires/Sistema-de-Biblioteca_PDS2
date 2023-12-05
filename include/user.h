@@ -4,33 +4,35 @@
 #include <iostream>
 #include <string>
 #include <memory>
-#include<map>
+#include <map>
 
 using std::string;
 
-class User {
+class User
+{
 public:
-    User(string login, string senha, int permissao);
+  User(string login, string senha, int permissao);
 
-    string getLogin();
+  string getLogin();
 
-    int getPermissao();
+  int getPermissao();
 
-    bool checarUsuario(string login, string senha);
+  bool checarUsuario(string login, string senha);
 
-    bool validarSenha(const string& senha);
+  bool validarSenha(const string &senha);
 
-    virtual ~User();
+  virtual ~User();
+
 protected:
-    
-    string getSenha() {
-        return this->senha_;
-    }
+  string getSenha()
+  {
+    return this->senha_;
+  }
 
 private:
-    string login_;
-    string senha_;
-    int nivelPermissao_;
+  string login_;
+  string senha_;
+  int nivelPermissao_;
 };
 
 #endif

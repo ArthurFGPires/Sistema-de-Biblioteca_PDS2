@@ -4,15 +4,18 @@
 #include <iostream>
 #include <exception>
 
-class Erro : public std::exception {
+class Erro : public std::exception
+{
 private:
-    std::string mensagem_;
-public:
-    Erro(const std::string& mensagem) : mensagem_(mensagem) {}
+  std::string mensagem_;
 
-    const char* what() const noexcept override {
-        return mensagem_.c_str();
-    }
+public:
+  Erro(const std::string &mensagem) : mensagem_(mensagem) {}
+
+  const char *what() const noexcept override
+  {
+    return mensagem_.c_str();
+  }
 };
 
 #endif

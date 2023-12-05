@@ -18,31 +18,31 @@
 
 using namespace std;
 
-
-class Interface {
+class Interface
+{
 
 public:
-    // Construtor da interface gráfica
-    Interface(Biblioteca& biblioteca);
-    
-    // Área q permite o usuário logar ou abrir seção de cadastro de usuário 
-    shared_ptr<User> areaLogin();
+  // Construtor da interface gráfica
+  Interface(Biblioteca &biblioteca);
 
-    // Menu onde o usuário pode ver os livros que estão emprestados a ele, pedir para listar livros disponíveis na biblioteca, pedir empréstimo de livro, devolver livro e verificar suas notificações 
-    void menuUsuario(shared_ptr<Usuario> usuario);
+  // Área q permite o usuário logar ou abrir seção de cadastro de usuário
+  shared_ptr<User> areaLogin();
 
-    // Menu onde o funcionário pode adicionar ou remover livros a biblioteca e adicionar novos funcionários
-    void menuFuncionario(shared_ptr<Funcionario> funcionario);
+  // Menu onde o usuário pode ver os livros que estão emprestados a ele, pedir para listar livros disponíveis na biblioteca, pedir empréstimo de livro, devolver livro e verificar suas notificações
+  void menuUsuario(shared_ptr<Usuario> usuario);
 
-    // Menu de cadastro de um usuário 
-    void cadastroUsuario();
+  // Menu onde o funcionário pode adicionar ou remover livros a biblioteca e adicionar novos funcionários
+  void menuFuncionario(shared_ptr<Funcionario> funcionario);
 
-    // Menu de cadastro de um funcionário 
-    void cadastroFuncionario();
+  // Menu de cadastro de um usuário
+  void cadastroUsuario();
+
+  // Menu de cadastro de um funcionário
+  void cadastroFuncionario();
 
 private:
-    vector<shared_ptr<User>> users_;
-    Biblioteca& biblioteca_;
+  vector<shared_ptr<User>> users_;
+  Biblioteca &biblioteca_;
 };
 
 #endif
