@@ -223,7 +223,7 @@ Descrição dos Métodos:
 
 ## Classe: Erro
 
--**Responsabilidades**
+- **Responsabilidades**
   - Possibilitar a criação de erros personalizados no código
   - Permitir o tratamento de erros personalizados no código
 
@@ -284,4 +284,4 @@ Após acessar como usuário, o menu exibe:
 
 Essas funcionalidades oferecem uma interação simples e completa com o sistema, permitindo aos usuários e funcionários realizar ações diversas de acordo com suas permissões e necessidades.
 
-Por motivos de teste do código o tempo de empréstimo foi definido para 1 minuto, então após 1 minuto do empréstimo do livro, caso a tela seja atualizada, uma notificação surgirá informando o atraso.
+Por motivos de teste do código, o tempo de empréstimo foi definido para 1 minuto, então após 1 minuto do empréstimo do livro, caso a tela seja atualizada, uma notificação surgirá informando o atraso.
